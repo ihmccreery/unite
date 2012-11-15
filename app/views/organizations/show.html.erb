@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <b>Title:</b>
+  <%= @organization.title %>
+</p>
+
+<p>
+  <b>Subtitle:</b>
+  <%= @organization.subtitle %>
+</p>
+
+<p>
+  <b>Slug:</b>
+  <%= @organization.slug %>
+</p>
+
+<p>
+  <b>Description:</b>
+  <%= @organization.description %>
+</p>
+
+
+<%= link_to 'Edit', edit_organization_path(@organization) %> |
+<%= link_to 'Back', organizations_path %>
