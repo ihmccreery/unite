@@ -1,6 +1,6 @@
 Constellate::Application.routes.draw do
-  resources :organizations
 
+  resources :organizations, path: ''
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
