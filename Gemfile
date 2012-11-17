@@ -20,6 +20,12 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
+# Gems used only for tests and not required
+# in production environments by default.
+group :test do
+  gem 'shoulda'
+end
+
 gem 'jquery-rails'
 
 # To use ActiveModel has_secure_password
