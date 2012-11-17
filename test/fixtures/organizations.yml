@@ -1,13 +1,12 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
-one:
-  title: MyString
-  subtitle: MyString
-  slug: MyString
-  description: MyText
+mommas_books:
+  title: "Momma's Books"
+  slug: mommas_books
+  description: "Let's read some books!"
 
-two:
-  title: MyString
-  subtitle: MyString
-  slug: MyString
-  description: MyText
+ofa:
+  title: "Obama for America"
+  subtitle: "Forward!"
+  slug: ofa
+  description: "Electing America's next president"

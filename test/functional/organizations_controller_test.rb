@@ -2,7 +2,7 @@ require 'test_helper'
 
 class OrganizationsControllerTest < ActionController::TestCase
   setup do
-    @organization = organizations(:one)
+    @organization = organizations(:mommas_books)
   end
 
   test "should get index" do
