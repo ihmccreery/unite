@@ -1,5 +1,8 @@
 class Organization < ActiveRecord::Base
 
+  include FriendlyId
+  friendly_id :slug
+
   attr_accessible :title, :subtitle, :description, :slug
 
   validates :title, :description, :slug, presence: true

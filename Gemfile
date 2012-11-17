@@ -42,3 +42,7 @@ gem 'jquery-rails'
 
 # To use debugger
 # gem 'debugger'
+
+# To use friendly_id
+# docs: http://rubydoc.info/github/norman/friendly_id/master/frames
+gem 'friendly_id'
