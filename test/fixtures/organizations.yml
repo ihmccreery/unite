@@ -1,5 +1,10 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
+constellate:
+  title: "Constellate"
+  slug: constellate
+  description: "Time to Change the World"
+
 mommas_books:
   title: "Momma's Books"
   slug: mommas_books
