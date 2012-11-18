@@ -1,29 +1,18 @@
-<h1>Listing organizations</h1>
+<h1>Organizations</h1>
 
-<table>
-  <tr>
-    <th>Title</th>
-    <th>Subtitle</th>
-    <th>Slug</th>
-    <th>Description</th>
-    <th></th>
-    <th></th>
-    <th></th>
-  </tr>
+<ul>
+  <li><%= link_to 'New Organization', new_organization_path %></li>
+</ul>
 
 <% @organizations.each do |organization| %>
-  <tr>
-    <td><%= organization.title %></td>
-    <td><%= organization.subtitle %></td>
-    <td><%= organization.slug %></td>
-    <td><%= organization.description %></td>
-    <td><%= link_to 'Show', organization %></td>
-    <td><%= link_to 'Edit', edit_organization_path(organization) %></td>
-    <td><%= link_to 'Destroy', organization, method: :delete, data: { confirm: 'Are you sure?' } %></td>
-  </tr>
+
+  <h1><%= link_to organization.title, organization %></h1>
+  <h2><%= organization.subtitle %></h2>
+  <p><%= organization.description %></p>
+
+  <ul>
+    <li><%= link_to 'Edit', edit_organization_path(organization) %></li>
+    <li><%= link_to 'Destroy', organization, method: :delete, data: { confirm: 'Are you sure?' } %></li>
+  </ul>
+
 <% end %>
-</table>
-
-<br />
-
-<%= link_to 'New Organization', new_organization_path %>

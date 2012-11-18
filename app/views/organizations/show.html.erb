@@ -1,25 +1,10 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <b>Title:</b>
-  <%= @organization.title %>
-</p>
+<h1><%= link_to @organization.title, @organization %></h1>
+<h2><%= @organization.subtitle %></h2>
+<p><%= @organization.description %></p>
 
-<p>
-  <b>Subtitle:</b>
-  <%= @organization.subtitle %>
-</p>
-
-<p>
-  <b>Slug:</b>
-  <%= @organization.slug %>
-</p>
-
-<p>
-  <b>Description:</b>
-  <%= @organization.description %>
-</p>
-
-
-<%= link_to 'Edit', edit_organization_path(@organization) %> |
-<%= link_to 'Back', organizations_path %>
+<ul>
+  <li><%= link_to 'Edit', edit_organization_path(@organization) %></li>
+  <li><%= link_to 'Back', organizations_path %></li>
+</ul>
