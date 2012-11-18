@@ -6,13 +6,15 @@
 
 <% @organizations.each do |organization| %>
 
-  <h1><%= link_to organization.title, organization %></h1>
-  <h2><%= organization.subtitle %></h2>
-  <p><%= organization.description %></p>
+  <div class="well">
+    <h1><%= link_to organization.title, organization %></h1>
+    <h2><%= organization.subtitle %></h2>
+    <p><%= organization.description %></p>
 
-  <ul>
-    <li><%= link_to 'Edit', edit_organization_path(organization) %></li>
-    <li><%= link_to 'Destroy', organization, method: :delete, data: { confirm: 'Are you sure?' } %></li>
-  </ul>
+    <ul>
+      <li><%= link_to 'Edit', edit_organization_path(organization) %></li>
+      <li><%= link_to 'Destroy', organization, method: :delete, data: { confirm: 'Are you sure?' } %></li>
+    </ul>
+  </div>
 
 <% end %>
