@@ -1,4 +1,4 @@
 constellate
 ===========
 
-The constellate project
+The Constellate project
