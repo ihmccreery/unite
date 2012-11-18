@@ -42,7 +42,7 @@
           <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
             <span class="icon-bar"></span>
           </a>
-          <a class="brand" href="#">Constellate</a>
+          <a class="brand" href="/">Constellate</a>
           <div class="container nav-collapse">
             <ul class="nav">
               <li><%= link_to "Organizations", organizations_path  %></li>
@@ -54,6 +54,7 @@
 
     <div class="container" id="content_container">
       <div class="row">
+        <%= render 'layouts/flash_messages' %>
         <div class="span12">
           <%= yield %>
         </div>
