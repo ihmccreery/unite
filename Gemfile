@@ -43,6 +43,11 @@ gem 'jquery-rails'
 # To use debugger
 # gem 'debugger'
 
+# To use Twitter Bootstrap
+gem 'therubyracer'
+gem 'less-rails' #Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS
+gem 'twitter-bootstrap-rails'
+
 # To use friendly_id
 # docs: http://rubydoc.info/github/norman/friendly_id/master/frames
 gem 'friendly_id'
