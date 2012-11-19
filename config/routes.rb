@@ -1,5 +1,7 @@
 Constellate::Application.routes.draw do
 
+  devise_for :users
+
   resources :organizations, path: 'o'
 
   # The priority is based upon order of creation:
