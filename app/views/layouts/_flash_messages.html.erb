@@ -1,8 +1,11 @@
 <div>
   <% flash.each do |key, value| %>
-    <div class="<%= flash_class(key) %> fade in">
-      <a href="#" data-dismiss="alert" class="close">×</a>
-      <%= value %>
-    </div>
+    <%# we must ignore the :timedout key set by Devise %>
+    <% unless key == :timedout %>
+      <div class="<%= flash_class(key) %> fade in">
+        <a href="#" data-dismiss="alert" class="close">×</a>
+        <%= value %>
+      </div>
+    <% end %>
   <% end %>
 </div>
