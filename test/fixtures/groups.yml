@@ -1,8 +1,8 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
-constellate_admins:
-  name: "Constellate admins"
-  organization: constellate
+unite_admins:
+  name: "Unite admins"
+  organization: unite
 
 mommas_books_admins:
   name: "Momma's Books Admins"
