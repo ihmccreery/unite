@@ -42,4 +42,12 @@ class GroupTest < ActiveSupport::TestCase
 
   end
 
+  context "destroying an organization with groups" do
+    should "destroy the groups" do
+      assert_difference('Group.count', -1) do
+        organizations(:ofa).destroy
+      end
+    end
+  end
+
 end

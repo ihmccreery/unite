@@ -4,7 +4,7 @@ class Organization < ActiveRecord::Base
   include FriendlyId
   friendly_id :slug
 
-  has_many :groups
+  has_many :groups, dependent: :destroy
   attr_accessible :title, :subtitle, :description, :slug
 
   validates :title, :description, :slug, presence: true
