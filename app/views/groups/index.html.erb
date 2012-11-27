@@ -4,7 +4,6 @@
   <tr>
     <th>Name</th>
     <th>Description</th>
-    <th>Organization</th>
     <th></th>
     <th></th>
     <th></th>
@@ -14,7 +13,6 @@
   <tr>
     <td><%= group.name %></td>
     <td><%= group.description %></td>
-    <td><%= group.organization %></td>
     <td><%= link_to 'Show', [@organization, group] %></td>
     <td><%= link_to 'Edit', edit_organization_group_path(@organization, group) %></td>
     <td><%= link_to 'Destroy', [@organization, group], method: :delete, data: { confirm: 'Are you sure?' } %></td>
