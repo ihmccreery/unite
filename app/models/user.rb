@@ -7,6 +7,8 @@ class User < ActiveRecord::Base
          :confirmable, :lockable, :timeoutable
 
   # Setup accessible (or protected) attributes for your model
+  has_many :memberships, dependent: :destroy
+  has_many :organizations, through: :memberships
   attr_accessible :username, :email, :password, :password_confirmation, :remember_me
 
   validates :username, presence: true, format: { with: /^[0-9a-zA-Z_\-]+$/ }, uniqueness: true
