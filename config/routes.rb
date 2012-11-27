@@ -2,9 +2,7 @@ Unite::Application.routes.draw do
 
   devise_for :users
 
-  resources :organizations, path: 'o' do
-    resources :groups
-  end
+  resources :organizations, path: 'o'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

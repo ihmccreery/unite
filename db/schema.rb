@@ -11,17 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20121120191126) do
-
-  create_table "groups", :force => true do |t|
-    t.string   "name"
-    t.text     "description"
-    t.integer  "organization_id"
-    t.datetime "created_at",      :null => false
-    t.datetime "updated_at",      :null => false
-  end
-
-  add_index "groups", ["organization_id"], :name => "index_groups_on_organization_id"
+ActiveRecord::Schema.define(:version => 20121127184742) do
 
   create_table "organizations", :force => true do |t|
     t.string   "title"
