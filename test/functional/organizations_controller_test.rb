@@ -1,6 +1,7 @@
 require 'test_helper'
 
 class OrganizationsControllerTest < ActionController::TestCase
+
   setup do
     @organization = organizations(:mommas_books)
     @attributes = {title: "Anti-Frack",
@@ -49,4 +50,5 @@ class OrganizationsControllerTest < ActionController::TestCase
 
     assert_redirected_to organizations_path
   end
+
 end
