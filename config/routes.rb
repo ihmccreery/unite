@@ -1,4 +1,4 @@
-Constellate::Application.routes.draw do
+Unite::Application.routes.draw do
 
   devise_for :users
 

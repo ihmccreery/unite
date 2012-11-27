@@ -1,8 +1,8 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
 
-constellate:
-  title: "Constellate"
-  slug: constellate
+unite:
+  title: "unite"
+  slug: unite
   description: "Time to Change the World"
 
 mommas_books:
