@@ -3,10 +3,10 @@ require 'test_helper'
 class OrganizationsControllerTest < ActionController::TestCase
 
   setup do
-    @organization = organizations(:mommas_books)
-    @attributes = {title: "Anti-Frack",
-                   slug: "af",
-                   description: "Let's not get fracked."}
+    @o = Organization.make!
+    @attributes = {title: "Some Organization",
+                   slug: "so",
+                   description: "We do stuff."}
   end
 
   test "should get index" do
@@ -29,23 +29,23 @@ class OrganizationsControllerTest < ActionController::TestCase
   end
 
   test "should show organization" do
-    get :show, id: @organization
+    get :show, id: @o
     assert_response :success
   end
 
   test "should get edit" do
-    get :edit, id: @organization
+    get :edit, id: @o
     assert_response :success
   end
 
   test "should update organization" do
-    put :update, id: @organization, organization: @attributes
+    put :update, id: @o, organization: @attributes
     assert_redirected_to organization_path(assigns(:organization))
   end
 
   test "should destroy organization" do
     assert_difference('Organization.count', -1) do
-      delete :destroy, id: @organization
+      delete :destroy, id: @o
     end
 
     assert_redirected_to organizations_path

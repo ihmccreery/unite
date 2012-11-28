@@ -2,25 +2,21 @@ require 'test_helper'
 
 class OrganizationTest < ActiveSupport::TestCase
 
-  context "all fixtures" do
+  context "a factory organization" do
     should "be valid" do
-      Organization.all.each do |organization|
-        assert organization.valid?
-      end
+      assert Organization.make.valid?
     end
   end
 
   context "an organization" do
 
     setup do
-      @af = Organization.new(title: "Anti-Frack",
-                             slug: "af",
-                             description: "Let's not get fracked.")
+      @o = Organization.make
     end
 
     context "that is valid" do
       should "be valid" do
-        assert @af.valid?
+        assert @o.valid?
       end
     end
 
@@ -36,28 +32,29 @@ class OrganizationTest < ActiveSupport::TestCase
 
     context "with a valid slug" do
       should "be valid" do
-        ['a_f', 'a-f', 'A-F'].each do |slug|
-          @af.slug = slug
-          assert @af.valid?, "#{slug} should be a valid slug"
+        ['o_o', 'o-o', 'O-O'].each do |slug|
+          @o.slug = slug
+          assert @o.valid?, "#{slug} should be a valid slug"
         end
       end
     end
 
     context "with an invalid slug" do
       should "be invalid" do
-        ['a f', '\af', 'a@f', ' ', 'new', 'edit'].each do |slug|
-          @af.slug = slug
-          assert @af.invalid?
-          assert @af.errors[:slug].any?, "#{slug} should be an invalid slug"
+        ['o o', '\o', 'o@', ' ', 'new', 'edit'].each do |slug|
+          @o.slug = slug
+          assert @o.invalid?
+          assert @o.errors[:slug].any?, "#{slug} should be an invalid slug"
         end
       end
     end
 
     context "with a duplicate slug" do
       should "be invalid" do
-        @af.slug = "mommas_books"
-        assert @af.invalid?
-        assert @af.errors[:slug].any?
+        @o.save!
+        o = Organization.make slug: @o.slug
+        assert o.invalid?
+        assert o.errors[:slug].any?
       end
     end
 

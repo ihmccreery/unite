@@ -8,6 +8,12 @@ require 'machinist/active_record'
 #     body  { "Lorem ipsum..." }
 #   end
 
+Organization.blueprint do
+  title { "Some Organization #{sn}" }
+  slug  { "so_#{sn}" }
+  description  { "We do stuff.  It's grand." }
+end
+
 User.blueprint do |user|
   username { "user#{sn}" }
   password  { "password#{sn}" }
