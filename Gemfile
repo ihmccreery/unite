@@ -25,6 +25,7 @@ end
 # Gems used only for tests and not required
 # in production environments by default.
 group :test do
+  gem 'machinist'
   gem 'shoulda'
 end
 
