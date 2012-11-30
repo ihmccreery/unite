@@ -4,14 +4,14 @@ class UserTest < ActiveSupport::TestCase
 
   context "a factory user" do
     should "be valid" do
-      assert User.make.valid?
+      assert User.make!.valid?
     end
   end
 
   context "a user" do
 
     setup do
-      @u = User.make
+      @u = User.make!
     end
 
     context "that is valid" do

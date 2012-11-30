@@ -4,14 +4,14 @@ class OrganizationTest < ActiveSupport::TestCase
 
   context "a factory organization" do
     should "be valid" do
-      assert Organization.make.valid?
+      assert Organization.make!.valid?
     end
   end
 
   context "an organization" do
 
     setup do
-      @o = Organization.make
+      @o = Organization.make!
     end
 
     context "that is valid" do
@@ -51,7 +51,6 @@ class OrganizationTest < ActiveSupport::TestCase
 
     context "with a duplicate slug" do
       should "be invalid" do
-        @o.save!
         o = Organization.make slug: @o.slug
         assert o.invalid?
         assert o.errors[:slug].any?
