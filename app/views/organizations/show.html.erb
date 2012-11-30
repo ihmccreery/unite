@@ -1,10 +1,12 @@
 <h1><%= link_to @organization.title, @organization %></h1>
 <h2><%= @organization.subtitle %></h2>
 <h3>
-  <% if current_user && current_user.member_of?(@organization) %>
-    <%= link_to 'Leave', leave_organization_path(@organization), method: :delete %>
-  <% else %>
-    <%= link_to 'Join', join_organization_path(@organization), method: :post %>
+  <% if current_user %>
+    <% if current_user.member_of?(@organization) %>
+      <%= link_to 'Leave', leave_organization_path(@organization), method: :delete %>
+    <% else %>
+      <%= link_to 'Join', join_organization_path(@organization), method: :post %>
+    <% end %>
   <% end %>
 </h3>
 <p><%= @organization.description %></p>
