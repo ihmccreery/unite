@@ -88,7 +88,7 @@ class OrganizationsController < ApplicationController
     @organization = Organization.find(params[:id])
 
     respond_to do |format|
-      if @organization.add_member(current_user)
+      if current_user.join(@organization)
         format.html { redirect_to @organization, notice: 'Organization was successfully joined.' }
         format.json { render json: @organization, status: :joined, location: @organization }
       else
@@ -104,11 +104,75 @@ class OrganizationsController < ApplicationController
     @organization = Organization.find(params[:id])
 
     respond_to do |format|
-      if @organization.remove_member(current_user)
+      if current_user.leave(@organization)
         format.html { redirect_to @organization, notice: 'Organization was successfully left.' }
         format.json { render json: @organization, status: :leaveed, location: @organization }
       else
         format.html { redirect_to @organization, notice: 'Organization was not successfully left.' }
+        format.json { render json: @organization, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # POST /o/1/watch
+  # POST /o/1/watch.json
+  def watch
+    @organization = Organization.find(params[:id])
+
+    respond_to do |format|
+      if current_user.watch(@organization)
+        format.html { redirect_to @organization, notice: 'Organization was successfully watched.' }
+        format.json { render json: @organization, status: :watched, location: @organization }
+      else
+        format.html { redirect_to @organization, notice: 'Organization was not successfully watched.' }
+        format.json { render json: @organization, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # POST /o/1/unwatch
+  # POST /o/1/unwatch.json
+  def unwatch
+    @organization = Organization.find(params[:id])
+
+    respond_to do |format|
+      if current_user.unwatch(@organization)
+        format.html { redirect_to @organization, notice: 'Organization was successfully unwatched.' }
+        format.json { render json: @organization, status: :unwatched, location: @organization }
+      else
+        format.html { redirect_to @organization, notice: 'Organization was not successfully unwatched.' }
+        format.json { render json: @organization, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # POST /o/1/star
+  # POST /o/1/star.json
+  def star
+    @organization = Organization.find(params[:id])
+
+    respond_to do |format|
+      if current_user.star(@organization)
+        format.html { redirect_to @organization, notice: 'Organization was successfully starred.' }
+        format.json { render json: @organization, status: :starred, location: @organization }
+      else
+        format.html { redirect_to @organization, notice: 'Organization was not successfully starred.' }
+        format.json { render json: @organization, status: :unprocessable_entity }
+      end
+    end
+  end
+
+  # POST /o/1/unstar
+  # POST /o/1/unstar.json
+  def unstar
+    @organization = Organization.find(params[:id])
+
+    respond_to do |format|
+      if current_user.unstar(@organization)
+        format.html { redirect_to @organization, notice: 'Organization was successfully unstarred.' }
+        format.json { render json: @organization, status: :unstarred, location: @organization }
+      else
+        format.html { redirect_to @organization, notice: 'Organization was not successfully unstarred.' }
         format.json { render json: @organization, status: :unprocessable_entity }
       end
     end

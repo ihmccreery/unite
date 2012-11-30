@@ -61,9 +61,43 @@ class OrganizationsControllerTest < ActionController::TestCase
   end
 
   test "should leave organization" do
-    @o.add_member(@u)
+    @u.join(@o)
     assert_difference('Membership.count', -1) do
       delete :leave, id: @o
+    end
+
+    assert_redirected_to organization_path(assigns(:organization))
+  end
+
+  test "should watch organization" do
+    assert_difference('Watch.count') do
+      post :watch, id: @o
+    end
+
+    assert_redirected_to organization_path(assigns(:organization))
+  end
+
+  test "should unwatch organization" do
+    @u.watch(@o)
+    assert_difference('Watch.count', -1) do
+      delete :unwatch, id: @o
+    end
+
+    assert_redirected_to organization_path(assigns(:organization))
+  end
+
+  test "should star organization" do
+    assert_difference('Star.count') do
+      post :star, id: @o
+    end
+
+    assert_redirected_to organization_path(assigns(:organization))
+  end
+
+  test "should unstar organization" do
+    @u.star(@o)
+    assert_difference('Star.count', -1) do
+      delete :unstar, id: @o
     end
 
     assert_redirected_to organization_path(assigns(:organization))

@@ -5,6 +5,10 @@ Unite::Application.routes.draw do
   resources :organizations, path: 'o' do
     post :join, :on => :member
     delete :leave, :on => :member
+    post :watch, :on => :member
+    delete :unwatch, :on => :member
+    post :star, :on => :member
+    delete :unstar, :on => :member
   end
 
   # resources :memberships, only: [:create, :destroy]

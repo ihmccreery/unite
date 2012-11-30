@@ -7,29 +7,27 @@ class MembershipTest < ActiveSupport::TestCase
     setup do
       @u = User.make!
       @o = Organization.make!
-      @o.add_member(@u)
+      @u.join(@o)
     end
 
     should "add that user to that organization" do
-      assert @o.has_member?(@u)
       assert @u.member_of?(@o)
     end
 
     should "not allow the user to be added again" do
       # TODO should this raise something more specific?
       assert_raise(Exception) do
-        @o.add_member(@u)
+        @u.join(@o)
       end
     end
 
     context "then removing that user from that organization" do
 
       setup do
-        @o.remove_member(@u)
+        @u.leave(@o)
       end
 
       should "remove that user from that organization" do
-        assert !@o.has_member?(@u)
         assert !@u.member_of?(@o)
       end
 
