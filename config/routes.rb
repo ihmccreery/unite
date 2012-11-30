@@ -2,7 +2,12 @@ Unite::Application.routes.draw do
 
   devise_for :users
 
-  resources :organizations, path: 'o'
+  resources :organizations, path: 'o' do
+    post :join, :on => :member
+    delete :leave, :on => :member
+  end
+
+  # resources :memberships, only: [:create, :destroy]
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

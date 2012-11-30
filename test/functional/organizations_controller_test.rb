@@ -7,6 +7,7 @@ class OrganizationsControllerTest < ActionController::TestCase
     @attributes = {title: "Some Organization",
                    slug: "so",
                    description: "We do stuff."}
+    sign_in @u = User.make!
   end
 
   test "should get index" do
@@ -49,6 +50,23 @@ class OrganizationsControllerTest < ActionController::TestCase
     end
 
     assert_redirected_to organizations_path
+  end
+
+  test "should join organization" do
+    assert_difference('Membership.count') do
+      post :join, id: @o
+    end
+
+    assert_redirected_to organization_path(assigns(:organization))
+  end
+
+  test "should leave organization" do
+    @o.add_member(@u)
+    assert_difference('Membership.count', -1) do
+      delete :leave, id: @o
+    end
+
+    assert_redirected_to organization_path(assigns(:organization))
   end
 
 end
