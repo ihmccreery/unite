@@ -5,7 +5,7 @@ class Organization < ActiveRecord::Base
   friendly_id :slug
 
   has_many :memberships, dependent: :destroy
-  has_many :members, through: :memberships
+  has_many :members, through: :memberships, source: :user
   attr_accessible :title, :subtitle, :description, :slug
 
   validates :title, :description, :slug, presence: true
@@ -17,6 +17,24 @@ class Organization < ActiveRecord::Base
   # move friendly_id error to slug
   def move_friendly_id_error_to_slug
     errors.add :slug, *errors.delete(:friendly_id) if errors[:friendly_id].present?
+  end
+
+  def add_member(user)
+    if self.has_member?(user)
+      raise Exception, "#{user.username} is already a member of #{self.title}"
+    end
+    self.members << user
+  end
+
+  def remove_member(user)
+    unless self.has_member?(user)
+      raise Exception, "#{user.username} is not a member of #{self.title}"
+    end
+    self.members.delete(user)
+  end
+
+  def has_member?(user)
+    return self.members.include?(user)
   end
 
 end

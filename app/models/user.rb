@@ -13,4 +13,8 @@ class User < ActiveRecord::Base
 
   validates :username, presence: true, format: { with: /^[0-9a-zA-Z_\-]+$/ }, uniqueness: true
 
+  def member_of?(organization)
+    return organization.has_member?(self)
+  end
+
 end
