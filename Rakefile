@@ -4,4 +4,4 @@
 
 require File.expand_path('../config/application', __FILE__)
 
-Constellate::Application.load_tasks
+Unite::Application.load_tasks

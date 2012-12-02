@@ -1,4 +1,4 @@
-Constellate::Application.configure do
+Unite::Application.configure do
   # Settings specified here will take precedence over those in config/application.rb
 
   # Code is not reloaded between requests
@@ -66,6 +66,6 @@ Constellate::Application.configure do
   # config.active_record.auto_explain_threshold_in_seconds = 0.5
 
   # ActionMailer default url (as recommended by Devise)
-  config.action_mailer.default_url_options = { :host => 'constellate.co' }
+  config.action_mailer.default_url_options = { :host => 'oberlinunite.org' }
 
 end

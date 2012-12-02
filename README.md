@@ -1,4 +1,4 @@
-constellate
+Unite
 ===========
 
-The Constellate project
+The Unite project

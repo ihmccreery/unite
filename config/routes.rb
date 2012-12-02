@@ -1,8 +1,10 @@
-Constellate::Application.routes.draw do
+Unite::Application.routes.draw do
 
   devise_for :users
 
-  resources :organizations, path: 'o'
+  resources :organizations, path: 'o' do
+    resources :groups
+  end
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
@@ -53,7 +55,7 @@ Constellate::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => 'organizations#index'
+  root :to => 'home#index'
 
   # See how all your routes lay out with "rake routes"
 
