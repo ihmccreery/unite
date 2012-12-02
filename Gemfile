@@ -49,6 +49,9 @@ gem 'jquery-rails'
 # To use Devise for users
 gem 'devise'
 
+# To use Grant for security
+gem 'grant'
+
 # To use Twitter Bootstrap for layout, styles, and Javascript
 gem 'therubyracer'
 gem 'less-rails' #Sprockets (what Rails 3.1 uses for its asset pipeline) supports LESS
