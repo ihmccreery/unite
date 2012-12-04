@@ -5,9 +5,11 @@ class MembershipTest < ActiveSupport::TestCase
   context "adding a user to an organization" do
 
     setup do
-      @u = User.make!
-      @o = Organization.make!
-      @u.join(@o)
+      without_grant do
+        @u = User.make!
+        @o = Organization.make!
+        @u.join(@o)
+      end
     end
 
     should "add that user to that organization" do
@@ -24,7 +26,9 @@ class MembershipTest < ActiveSupport::TestCase
     context "then removing that user from that organization" do
 
       setup do
-        @u.leave(@o)
+        without_grant do
+          @u.leave(@o)
+        end
       end
 
       should "remove that user from that organization" do
@@ -38,7 +42,9 @@ class MembershipTest < ActiveSupport::TestCase
       context "the user" do
 
         setup do
-          @u.destroy
+          without_grant do
+            @u.destroy
+          end
         end
 
         should "destroy the membership" do
@@ -50,7 +56,9 @@ class MembershipTest < ActiveSupport::TestCase
       context "the organization" do
 
         setup do
-          @o.destroy
+          without_grant do
+            @o.destroy
+          end
         end
 
         should "destroy the membership" do

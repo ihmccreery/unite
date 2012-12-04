@@ -4,6 +4,9 @@ require 'rails/test_help'
 require File.expand_path(File.dirname(__FILE__) + '/blueprints')
 
 class ActiveSupport::TestCase
+
+  include Grant::Status
+
   # Setup all fixtures in test/fixtures/*.(yml|csv) for all tests in alphabetical order.
   #
   # Note: You'll currently still have to declare fixtures explicitly in integration tests

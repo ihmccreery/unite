@@ -11,7 +11,9 @@ class OrganizationTest < ActiveSupport::TestCase
   context "an organization" do
 
     setup do
-      @o = Organization.make!
+      without_grant do
+        @o = Organization.make!
+      end
     end
 
     context "that is valid" do

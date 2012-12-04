@@ -5,9 +5,11 @@ class StarTest < ActiveSupport::TestCase
   context "a user starring an organization" do
 
     setup do
-      @u = User.make!
-      @o = Organization.make!
-      @u.star(@o)
+      without_grant do
+        @u = User.make!
+        @o = Organization.make!
+        @u.star(@o)
+      end
     end
 
     should "make that user star that organization" do
@@ -24,7 +26,9 @@ class StarTest < ActiveSupport::TestCase
     context "then unstarring that organization" do
 
       setup do
-        @u.unstar(@o)
+        without_grant do
+          @u.unstar(@o)
+        end
       end
 
       should "remove that star" do
@@ -38,7 +42,9 @@ class StarTest < ActiveSupport::TestCase
       context "the user" do
 
         setup do
-          @u.destroy
+          without_grant do
+            @u.destroy
+          end
         end
 
         should "destroy the star" do
@@ -50,7 +56,9 @@ class StarTest < ActiveSupport::TestCase
       context "the organization" do
 
         setup do
-          @o.destroy
+          without_grant do
+            @o.destroy
+          end
         end
 
         should "destroy the star" do

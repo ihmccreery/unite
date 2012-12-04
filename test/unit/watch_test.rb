@@ -5,9 +5,11 @@ class WatchTest < ActiveSupport::TestCase
   context "a user watching an organization" do
 
     setup do
-      @u = User.make!
-      @o = Organization.make!
-      @u.watch(@o)
+      without_grant do
+        @u = User.make!
+        @o = Organization.make!
+        @u.watch(@o)
+      end
     end
 
     should "make that user watch that organization" do
@@ -24,7 +26,9 @@ class WatchTest < ActiveSupport::TestCase
     context "then unwatching that organization" do
 
       setup do
-        @u.unwatch(@o)
+        without_grant do
+          @u.unwatch(@o)
+        end
       end
 
       should "remove that watch" do
@@ -38,7 +42,9 @@ class WatchTest < ActiveSupport::TestCase
       context "the user" do
 
         setup do
-          @u.destroy
+          without_grant do
+            @u.destroy
+          end
         end
 
         should "destroy the watch" do
@@ -50,7 +56,9 @@ class WatchTest < ActiveSupport::TestCase
       context "the organization" do
 
         setup do
-          @o.destroy
+          without_grant do
+            @o.destroy
+          end
         end
 
         should "destroy the watch" do
