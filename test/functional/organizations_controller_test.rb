@@ -5,11 +5,13 @@ class OrganizationsControllerTest < ActionController::TestCase
   context "a signed-in factory user with a factory organization" do
 
     setup do
-      @o = Organization.make!
-      @attributes = {title: "Some Organization",
-                     slug: "so",
-                     description: "We do stuff."}
-      sign_in @u = User.make!
+      without_grant do
+        @o = Organization.make!
+        @attributes = {title: "Some Organization",
+                       slug: "so",
+                       description: "We do stuff."}
+        sign_in @u = User.make!
+      end
     end
 
     should "get index" do
@@ -36,23 +38,23 @@ class OrganizationsControllerTest < ActionController::TestCase
       assert_response :success
     end
 
-    should "get edit" do
-      get :edit, id: @o
-      assert_response :success
-    end
+    # should "get edit" do
+    #   get :edit, id: @o
+    #   assert_response :success
+    # end
 
-    should "update organization" do
-      put :update, id: @o, organization: @attributes
-      assert_redirected_to organization_path(assigns(:organization))
-    end
+    # should "update organization" do
+    #   put :update, id: @o, organization: @attributes
+    #   assert_redirected_to organization_path(assigns(:organization))
+    # end
 
-    should "destroy organization" do
-      assert_difference('Organization.count', -1) do
-        delete :destroy, id: @o
-      end
+    # should "destroy organization" do
+    #   assert_difference('Organization.count', -1) do
+    #     delete :destroy, id: @o
+    #   end
 
-      assert_redirected_to organizations_path
-    end
+    #   assert_redirected_to organizations_path
+    # end
 
     should "join organization" do
       assert_difference('Membership.count') do
@@ -103,6 +105,34 @@ class OrganizationsControllerTest < ActionController::TestCase
       end
 
       assert_redirected_to organization_path(assigns(:organization))
+    end
+
+    context "who is a member of the organization" do
+
+      setup do
+        without_grant do
+          @u.join(@o)
+        end
+      end
+
+      should "get edit" do
+        get :edit, id: @o
+        assert_response :success
+      end
+
+      should "update organization" do
+        put :update, id: @o, organization: @attributes
+        assert_redirected_to organization_path(assigns(:organization))
+      end
+
+      should "destroy organization" do
+        assert_difference('Organization.count', -1) do
+          delete :destroy, id: @o
+        end
+
+        assert_redirected_to organizations_path
+      end
+
     end
 
   end
