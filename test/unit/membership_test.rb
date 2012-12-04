@@ -2,6 +2,30 @@ require 'test_helper'
 
 class MembershipTest < ActiveSupport::TestCase
 
+  # security
+
+  context "a user" do
+
+    setup do
+      without_grant do
+        @o = Organization.make!
+        Grant::User.current_user = @u = User.make!
+        @v = User.make!
+      end
+    end
+
+    should "be able to star an organization" do
+      assert_nothing_raised(Grant::Error) { @u.join(@o) }
+    end
+
+    should "not be able to star an organization for another user" do
+      assert_raise(Grant::Error) { @v.join(@o) }
+    end
+
+  end
+
+  # mechanics
+
   context "adding a user to an organization" do
 
     setup do
@@ -12,7 +36,7 @@ class MembershipTest < ActiveSupport::TestCase
       end
     end
 
-    should "add that user to that organization" do
+    should "succeed" do
       assert @u.member_of?(@o)
     end
 
