@@ -24,26 +24,6 @@ class StarTest < ActiveSupport::TestCase
 
   end
 
-  context "a user who is a member of an organization" do
-
-    setup do
-      without_grant do
-        @o = Organization.make!
-        Grant::User.current_user = @u = User.make!
-        @u.join(@o)
-      end
-    end
-
-    should "be able to save that organization" do
-      assert_nothing_raised(Grant::Error) { @o.save }
-    end
-
-    should "be able to destroy that organization" do
-      assert_nothing_raised(Grant::Error) { @o.save }
-    end
-
-  end
-
   # mechanics
 
   context "a user starring an organization" do
