@@ -2,6 +2,50 @@ require 'test_helper'
 
 class StarTest < ActiveSupport::TestCase
 
+  # security
+
+  context "a user" do
+
+    setup do
+      without_grant do
+        @o = Organization.make!
+        Grant::User.current_user = @u = User.make!
+        @v = User.make!
+      end
+    end
+
+    should "be able to star an organization" do
+      assert_nothing_raised(Grant::Error) { @u.star(@o) }
+    end
+
+    should "not be able to star an organization for another user" do
+      assert_raise(Grant::Error) { @v.star(@o) }
+    end
+
+  end
+
+  context "a user who is a member of an organization" do
+
+    setup do
+      without_grant do
+        @o = Organization.make!
+        Grant::User.current_user = @u = User.make!
+        @u.join(@o)
+      end
+    end
+
+    should "be able to save that organization" do
+      assert_nothing_raised(Grant::Error) { @o.save }
+    end
+
+    should "be able to destroy that organization" do
+      assert_nothing_raised(Grant::Error) { @o.save }
+    end
+
+  end
+
+  # mechanics
+
   context "a user starring an organization" do
 
     setup do
@@ -12,7 +56,7 @@ class StarTest < ActiveSupport::TestCase
       end
     end
 
-    should "make that user star that organization" do
+    should "succeed" do
       assert @u.has_starred?(@o)
     end
 
