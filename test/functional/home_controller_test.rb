@@ -2,13 +2,17 @@ require 'test_helper'
 
 class HomeControllerTest < ActionController::TestCase
 
-  setup do
-    sign_in @u = User.make!
-  end
+  context "a signed-in factory user" do
 
-  test "should get index" do
-    get :index
-    assert_response :success
+    setup do
+      sign_in @u = User.make!
+    end
+
+    should "get index" do
+      get :index
+      assert_response :success
+    end
+
   end
 
 end
