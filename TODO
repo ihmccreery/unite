@@ -1,0 +1,18 @@
+TODO
+
+models
+	organization
+	membership
+	star
+	watch
+	user?
+
+views
+	layouts
+	home
+	organizations
+	devise?
+
+controllers
+	home
+	organizations
