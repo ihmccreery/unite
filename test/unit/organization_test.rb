@@ -4,25 +4,6 @@ class OrganizationTest < ActiveSupport::TestCase
 
   # security
 
-  context "a user who is not a member of an organization" do
-
-    setup do
-      without_grant do
-        @o = Organization.make!
-        Grant::User.current_user = User.make!
-      end
-    end
-
-    should "not be able to save that organization" do
-      assert_raise(Grant::Error) { @o.save }
-    end
-
-    should "not be able to destroy that organization" do
-      assert_raise(Grant::Error) { @o.destroy }
-    end
-
-  end
-
   context "a user who is a member of an organization" do
 
     setup do
@@ -39,6 +20,25 @@ class OrganizationTest < ActiveSupport::TestCase
 
     should "be able to destroy that organization" do
       assert_nothing_raised(Grant::Error) { @o.save }
+    end
+
+  end
+
+  context "a user who is not a member of an organization" do
+
+    setup do
+      without_grant do
+        @o = Organization.make!
+        Grant::User.current_user = User.make!
+      end
+    end
+
+    should "not be able to save that organization" do
+      assert_raise(Grant::Error) { @o.save }
+    end
+
+    should "not be able to destroy that organization" do
+      assert_raise(Grant::Error) { @o.destroy }
     end
 
   end
