@@ -1,5 +1,8 @@
 class Organization < ActiveRecord::Base
 
+  grant(:create, :find) { true }
+  grant(:update, :destroy) { |user, organization| user && user.member_of?(organization) }
+
   # friendly_id uses slug
   include FriendlyId
   friendly_id :slug

@@ -1,6 +1,8 @@
-<div class="well">
-  <h1><%= link_to "New organization", new_organization_path %></h1>
-</div>
+<% if Organization.granted?(:create) %>
+  <div class="well">
+    <h1><%= link_to "New organization", new_organization_path %></h1>
+  </div>
+<% end %>
 
 <% @organizations.each do |organization| %>
 

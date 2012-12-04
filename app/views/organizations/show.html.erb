@@ -30,5 +30,7 @@
 <p><%= @organization.description %></p>
 
 <ul>
-  <li><%= link_to 'Edit', edit_organization_path(@organization) %></li>
+  <% if @organization.granted?(:update) %>
+    <li><%= link_to 'Edit', edit_organization_path(@organization) %></li>
+  <% end %>
 </ul>
