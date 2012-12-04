@@ -2,11 +2,48 @@ require 'test_helper'
 
 class OrganizationTest < ActiveSupport::TestCase
 
-  context "a factory organization" do
-    should "be valid" do
-      assert Organization.make!.valid?
+  # security
+
+  context "a user who is not a member of an organization" do
+
+    setup do
+      without_grant do
+        @o = Organization.make!
+        Grant::User.current_user = User.make!
+      end
     end
+
+    should "not be able to save that organization" do
+      assert_raise(Grant::Error) { @o.save }
+    end
+
+    should "not be able to destroy that organization" do
+      assert_raise(Grant::Error) { @o.destroy }
+    end
+
   end
+
+  context "a user who is a member of an organization" do
+
+    setup do
+      without_grant do
+        @o = Organization.make!
+        Grant::User.current_user = @u = User.make!
+        @u.join(@o)
+      end
+    end
+
+    should "be able to save that organization" do
+      assert_nothing_raised(Grant::Error) { @o.save }
+    end
+
+    should "be able to destroy that organization" do
+      assert_nothing_raised(Grant::Error) { @o.save }
+    end
+
+  end
+
+  # validations
 
   context "an organization" do
 
@@ -16,20 +53,8 @@ class OrganizationTest < ActiveSupport::TestCase
       end
     end
 
-    context "that is valid" do
-      should "be valid" do
-        assert @o.valid?
-      end
-    end
-
-    context "that is empty" do
-      should "be invalid" do
-        o = Organization.new
-        assert o.invalid?
-        assert o.errors[:title].any?
-        assert o.errors[:slug].any?
-        assert o.errors[:description].any?
-      end
+    should "be valid" do
+      assert @o.valid?
     end
 
     context "with a valid slug" do
@@ -57,6 +82,23 @@ class OrganizationTest < ActiveSupport::TestCase
         assert o.invalid?
         assert o.errors[:slug].any?
       end
+    end
+
+  end
+
+  context "an empty organization" do
+
+    setup do
+      without_grant do
+        @o = Organization.new
+      end
+    end
+
+    should "be invalid" do
+      assert @o.invalid?
+      assert @o.errors[:title].any?
+      assert @o.errors[:slug].any?
+      assert @o.errors[:description].any?
     end
 
   end
