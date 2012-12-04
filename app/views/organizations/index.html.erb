@@ -1,4 +1,4 @@
-<% if Organization.granted?(:create) %>
+<% if Organization.new.granted?(:create) %>
   <div class="well">
     <h1><%= link_to "New organization", new_organization_path %></h1>
   </div>
