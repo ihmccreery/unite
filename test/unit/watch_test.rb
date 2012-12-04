@@ -2,6 +2,30 @@ require 'test_helper'
 
 class WatchTest < ActiveSupport::TestCase
 
+  # security
+
+  context "a user" do
+
+    setup do
+      without_grant do
+        @o = Organization.make!
+        Grant::User.current_user = @u = User.make!
+        @v = User.make!
+      end
+    end
+
+    should "be able to watch an organization" do
+      assert_nothing_raised(Grant::Error) { @u.star(@o) }
+    end
+
+    should "not be able to watch an organization for another user" do
+      assert_raise(Grant::Error) { @v.star(@o) }
+    end
+
+  end
+
+  # mechanics
+
   context "a user watching an organization" do
 
     setup do
@@ -12,7 +36,7 @@ class WatchTest < ActiveSupport::TestCase
       end
     end
 
-    should "make that user watch that organization" do
+    should "succeed" do
       assert @u.is_watching?(@o)
     end
 
