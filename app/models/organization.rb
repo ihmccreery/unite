@@ -16,7 +16,7 @@ class Organization < ActiveRecord::Base
   attr_accessible :title, :subtitle, :description, :slug
 
   validates :title, :description, :slug, presence: true
-  validates :slug, format: { with: /^[0-9a-zA-Z_\-]+$/ }, uniqueness: true
+  validates :slug, format: { with: /^[0-9a-z_\-]+$/ }, uniqueness: true
 
   # move friendly_id errors to slug
   after_validation :move_friendly_id_error_to_slug

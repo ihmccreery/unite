@@ -15,7 +15,7 @@ class User < ActiveRecord::Base
   has_many :starred_organizations, through: :stars, source: :organization
   attr_accessible :username, :email, :password, :password_confirmation, :remember_me
 
-  validates :username, presence: true, format: { with: /^[0-9a-zA-Z_\-]+$/ }, uniqueness: true
+  validates :username, presence: true, format: { with: /^[0-9a-z_\-]+$/ }, uniqueness: true
 
   def join(organization)
     if self.member_of?(organization)
