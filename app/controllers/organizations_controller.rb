@@ -1,5 +1,7 @@
 class OrganizationsController < ApplicationController
 
+  before_filter :authenticate_user!, :only => [:new, :join, :watch, :star]
+
   # GET /o
   # GET /o.json
   def index

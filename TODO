@@ -4,9 +4,6 @@ models
 	user?
 
 views
-	layouts
-	home
-	organizations
 	devise?
 
 controllers
