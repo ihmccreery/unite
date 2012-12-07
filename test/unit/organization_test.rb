@@ -32,7 +32,7 @@ class OrganizationTest < ActiveSupport::TestCase
 
     context "with a valid slug" do
       should "be valid" do
-        ['o_o', 'o-o', 'O-O'].each do |slug|
+        ['o_o', 'o-o'].each do |slug|
           @o.slug = slug
           assert @o.valid?, "#{slug} should be a valid slug"
         end
@@ -41,7 +41,7 @@ class OrganizationTest < ActiveSupport::TestCase
 
     context "with an invalid slug" do
       should "be invalid" do
-        ['o o', '\o', 'o@', ' ', 'new', 'edit'].each do |slug|
+        ['o o', '\o', 'o@', ' ', 'O-O', 'new', 'edit'].each do |slug|
           @o.slug = slug
           assert @o.invalid?
           assert @o.errors[:slug].any?, "#{slug} should be an invalid slug"

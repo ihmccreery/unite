@@ -32,7 +32,7 @@ class UserTest < ActiveSupport::TestCase
 
     context "with a valid username" do
       should "be valid" do
-        ['u_', 'u-', 'U-'].each do |username|
+        ['u_', 'u-'].each do |username|
           @u.username = username
           assert @u.valid?, "#{username} should be a valid username"
         end
@@ -41,7 +41,7 @@ class UserTest < ActiveSupport::TestCase
 
     context "with an invalid username" do
       should "be invalid" do
-        ['u ', '\u', 'u@u', ' '].each do |username|
+        ['u ', '\u', 'u@u', ' ', 'U-'].each do |username|
           @u.username = username
           assert @u.invalid?
           assert @u.errors[:username].any?, "#{username} should be an invalid username"
