@@ -15,11 +15,11 @@ class MembershipTest < ActiveSupport::TestCase
     end
 
     should "be able to join an organization" do
-      assert_nothing_raised(Grant::Error) { @o.add_member(@u) }
+      assert_nothing_raised(Grant::Error) { @o.add_member!(@u) }
     end
 
     should "not be able to add another user to an organization" do
-      assert_raise(Grant::Error) { @o.add_member(@v) }
+      assert_raise(Grant::Error) { @o.add_member!(@v) }
     end
 
   end
@@ -32,7 +32,7 @@ class MembershipTest < ActiveSupport::TestCase
       without_grant do
         @u = User.make!
         @o = Organization.make!
-        @o.add_member(@u)
+        @o.add_member!(@u)
       end
     end
 
@@ -42,7 +42,7 @@ class MembershipTest < ActiveSupport::TestCase
 
     should "not allow the user to be added again" do
       assert_raise(Membership::Error) do
-        @o.add_member(@u)
+        @o.add_member!(@u)
       end
     end
 
@@ -50,7 +50,7 @@ class MembershipTest < ActiveSupport::TestCase
 
       setup do
         without_grant do
-          @o.remove_member(@u)
+          @o.remove_member!(@u)
         end
       end
 

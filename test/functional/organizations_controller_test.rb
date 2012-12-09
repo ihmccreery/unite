@@ -65,7 +65,7 @@ class OrganizationsControllerTest < ActionController::TestCase
     end
 
     should "leave organization" do
-      @o.add_member(@u)
+      @o.add_member!(@u)
       assert_difference('Membership.count', -1) do
         delete :leave, id: @o
       end
@@ -82,7 +82,7 @@ class OrganizationsControllerTest < ActionController::TestCase
     end
 
     should "unwatch organization" do
-      @o.add_watcher(@u)
+      @o.add_watcher!(@u)
       assert_difference('Watch.count', -1) do
         delete :unwatch, id: @o
       end
@@ -99,7 +99,7 @@ class OrganizationsControllerTest < ActionController::TestCase
     end
 
     should "unstar organization" do
-      @o.add_starrer(@u)
+      @o.add_starrer!(@u)
       assert_difference('Star.count', -1) do
         delete :unstar, id: @o
       end
@@ -111,7 +111,7 @@ class OrganizationsControllerTest < ActionController::TestCase
 
       setup do
         without_grant do
-          @o.add_member(@u)
+          @o.add_member!(@u)
         end
       end
 

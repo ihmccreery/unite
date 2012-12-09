@@ -10,7 +10,7 @@ class OrganizationTest < ActiveSupport::TestCase
       without_grant do
         @o = Organization.make!
         Grant::User.current_user = @u = User.make!
-        @o.add_member(@u)
+        @o.add_member!(@u)
       end
     end
 
