@@ -17,40 +17,4 @@ class User < ActiveRecord::Base
 
   validates :username, presence: true, format: { with: /^[0-9a-z_\-]+$/ }, uniqueness: true
 
-  def watch(organization)
-    if self.is_watching?(organization)
-      raise Exception, "#{self.username} is already watching #{organization.title}"
-    end
-    self.watched_organizations << organization
-  end
-
-  def unwatch(organization)
-    unless self.is_watching?(organization)
-      raise Exception, "#{self.username} is not watching #{organization.title}"
-    end
-    self.watched_organizations.delete(organization)
-  end
-
-  def is_watching?(organization)
-    return self.watched_organizations.include?(organization)
-  end
-
-  def star(organization)
-    if self.has_starred?(organization)
-      raise Exception, "#{self.username} has already starred #{organization.title}"
-    end
-    self.starred_organizations << organization
-  end
-
-  def unstar(organization)
-    unless self.has_starred?(organization)
-      raise Exception, "#{self.username} has not starred #{organization.title}"
-    end
-    self.starred_organizations.delete(organization)
-  end
-
-  def has_starred?(organization)
-    return self.starred_organizations.include?(organization)
-  end
-
 end

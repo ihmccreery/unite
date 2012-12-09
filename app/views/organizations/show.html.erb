@@ -10,7 +10,7 @@
 </h3>
 <h3>
   <%# TODO make tip that a user must be signed in %>
-  <% if current_user && current_user.is_watching?(@organization) %>
+  <% if current_user && @organization.watched_by?(current_user) %>
     <%= link_to 'Unwatch', unwatch_organization_path(@organization), method: :delete %>
   <% else %>
     <%= link_to 'Watch', watch_organization_path(@organization), method: :post %>
@@ -18,7 +18,7 @@
 </h3>
 <h3>
   <%# TODO make tip that a user must be signed in %>
-  <% if current_user && current_user.has_starred?(@organization) %>
+  <% if current_user && @organization.starred_by?(current_user) %>
     <%= link_to 'Unstar', unstar_organization_path(@organization), method: :delete %>
   <% else %>
     <%= link_to 'Star', star_organization_path(@organization), method: :post %>

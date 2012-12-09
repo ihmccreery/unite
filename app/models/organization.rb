@@ -44,4 +44,40 @@ class Organization < ActiveRecord::Base
     return self.members.include?(user)
   end
 
+  def add_watcher(user)
+    if self.watched_by?(user)
+      raise Exception, "#{user.username} is already watching #{self.title}"
+    end
+    self.watchers << user
+  end
+
+  def remove_watcher(user)
+    unless self.watched_by?(user)
+      raise Exception, "#{user.username} is not watching #{self.title}"
+    end
+    self.watchers.delete(user)
+  end
+
+  def watched_by?(user)
+    return self.watchers.include?(user)
+  end
+
+  def add_starrer(user)
+    if self.starred_by?(user)
+      raise Exception, "#{user.username} has already starred #{self.title}"
+    end
+    self.starrers << user
+  end
+
+  def remove_starrer(user)
+    unless self.starred_by?(user)
+      raise Exception, "#{user.username} has not starred #{self.title}"
+    end
+    self.starrers.delete(user)
+  end
+
+  def starred_by?(user)
+    return self.starrers.include?(user)
+  end
+
 end

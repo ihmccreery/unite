@@ -15,11 +15,11 @@ class StarTest < ActiveSupport::TestCase
     end
 
     should "be able to star an organization" do
-      assert_nothing_raised(Grant::Error) { @u.star(@o) }
+      assert_nothing_raised(Grant::Error) { @o.add_starrer(@u) }
     end
 
     should "not be able to star an organization for another user" do
-      assert_raise(Grant::Error) { @v.star(@o) }
+      assert_raise(Grant::Error) { @o.add_starrer(@v) }
     end
 
   end
@@ -32,18 +32,18 @@ class StarTest < ActiveSupport::TestCase
       without_grant do
         @u = User.make!
         @o = Organization.make!
-        @u.star(@o)
+        @o.add_starrer(@u)
       end
     end
 
     should "succeed" do
-      assert @u.has_starred?(@o)
+      assert @o.starred_by?(@u)
     end
 
     should "not allow the user to star that organization again" do
       # TODO should this raise something more specific?
       assert_raise(Exception) do
-        @u.star(@o)
+        @o.add_starrer(@u)
       end
     end
 
@@ -51,12 +51,12 @@ class StarTest < ActiveSupport::TestCase
 
       setup do
         without_grant do
-          @u.unstar(@o)
+          @o.remove_starrer(@u)
         end
       end
 
       should "remove that star" do
-        assert !@u.has_starred?(@o)
+        assert !@o.starred_by?(@u)
       end
 
     end

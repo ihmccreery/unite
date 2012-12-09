@@ -82,7 +82,7 @@ class OrganizationsControllerTest < ActionController::TestCase
     end
 
     should "unwatch organization" do
-      @u.watch(@o)
+      @o.add_watcher(@u)
       assert_difference('Watch.count', -1) do
         delete :unwatch, id: @o
       end
@@ -99,7 +99,7 @@ class OrganizationsControllerTest < ActionController::TestCase
     end
 
     should "unstar organization" do
-      @u.star(@o)
+      @o.add_starrer(@u)
       assert_difference('Star.count', -1) do
         delete :unstar, id: @o
       end

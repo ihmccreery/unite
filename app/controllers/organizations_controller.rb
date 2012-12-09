@@ -122,7 +122,7 @@ class OrganizationsController < ApplicationController
     @organization = Organization.find(params[:id].downcase)
 
     respond_to do |format|
-      if current_user.watch(@organization)
+      if @organization.add_watcher(current_user)
         format.html { redirect_to @organization, notice: 'Organization was successfully watched.' }
         format.json { render json: @organization, status: :watched, location: @organization }
       else
@@ -138,7 +138,7 @@ class OrganizationsController < ApplicationController
     @organization = Organization.find(params[:id].downcase)
 
     respond_to do |format|
-      if current_user.unwatch(@organization)
+      if @organization.remove_watcher(current_user)
         format.html { redirect_to @organization, notice: 'Organization was successfully unwatched.' }
         format.json { render json: @organization, status: :unwatched, location: @organization }
       else
@@ -154,7 +154,7 @@ class OrganizationsController < ApplicationController
     @organization = Organization.find(params[:id].downcase)
 
     respond_to do |format|
-      if current_user.star(@organization)
+      if @organization.add_starrer(current_user)
         format.html { redirect_to @organization, notice: 'Organization was successfully starred.' }
         format.json { render json: @organization, status: :starred, location: @organization }
       else
@@ -170,7 +170,7 @@ class OrganizationsController < ApplicationController
     @organization = Organization.find(params[:id].downcase)
 
     respond_to do |format|
-      if current_user.unstar(@organization)
+      if @organization.remove_starrer(current_user)
         format.html { redirect_to @organization, notice: 'Organization was successfully unstarred.' }
         format.json { render json: @organization, status: :unstarred, location: @organization }
       else
