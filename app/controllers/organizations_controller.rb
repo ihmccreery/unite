@@ -90,7 +90,7 @@ class OrganizationsController < ApplicationController
     @organization = Organization.find(params[:id].downcase)
 
     respond_to do |format|
-      if current_user.join(@organization)
+      if @organization.add_member(current_user)
         format.html { redirect_to @organization, notice: 'Organization was successfully joined.' }
         format.json { render json: @organization, status: :joined, location: @organization }
       else
@@ -106,7 +106,7 @@ class OrganizationsController < ApplicationController
     @organization = Organization.find(params[:id].downcase)
 
     respond_to do |format|
-      if current_user.leave(@organization)
+      if @organization.remove_member(current_user)
         format.html { redirect_to @organization, notice: 'Organization was successfully left.' }
         format.json { render json: @organization, status: :leaveed, location: @organization }
       else

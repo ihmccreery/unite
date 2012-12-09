@@ -2,7 +2,7 @@
 <h2><%= @organization.subtitle %></h2>
 <h3>
   <%# TODO make tip that a user must be signed in %>
-  <% if current_user && current_user.member_of?(@organization) %>
+  <% if current_user && @organization.has_member?(current_user) %>
     <%= link_to 'Leave', leave_organization_path(@organization), method: :delete %>
   <% else %>
     <%= link_to 'Join', join_organization_path(@organization), method: :post %>

@@ -65,7 +65,7 @@ class OrganizationsControllerTest < ActionController::TestCase
     end
 
     should "leave organization" do
-      @u.join(@o)
+      @o.add_member(@u)
       assert_difference('Membership.count', -1) do
         delete :leave, id: @o
       end
@@ -111,7 +111,7 @@ class OrganizationsControllerTest < ActionController::TestCase
 
       setup do
         without_grant do
-          @u.join(@o)
+          @o.add_member(@u)
         end
       end
 

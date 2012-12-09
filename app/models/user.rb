@@ -17,24 +17,6 @@ class User < ActiveRecord::Base
 
   validates :username, presence: true, format: { with: /^[0-9a-z_\-]+$/ }, uniqueness: true
 
-  def join(organization)
-    if self.member_of?(organization)
-      raise Exception, "#{self.username} is already a member of #{organization.title}"
-    end
-    self.organizations << organization
-  end
-
-  def leave(organization)
-    unless self.member_of?(organization)
-      raise Exception, "#{self.username} is not a member of #{organization.title}"
-    end
-    self.organizations.delete(organization)
-  end
-
-  def member_of?(organization)
-    return self.organizations.include?(organization)
-  end
-
   def watch(organization)
     if self.is_watching?(organization)
       raise Exception, "#{self.username} is already watching #{organization.title}"

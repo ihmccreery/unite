@@ -14,12 +14,12 @@ class MembershipTest < ActiveSupport::TestCase
       end
     end
 
-    should "be able to star an organization" do
-      assert_nothing_raised(Grant::Error) { @u.join(@o) }
+    should "be able to join an organization" do
+      assert_nothing_raised(Grant::Error) { @o.add_member(@u) }
     end
 
-    should "not be able to star an organization for another user" do
-      assert_raise(Grant::Error) { @v.join(@o) }
+    should "not be able to add another user to an organization" do
+      assert_raise(Grant::Error) { @o.add_member(@v) }
     end
 
   end
@@ -32,18 +32,18 @@ class MembershipTest < ActiveSupport::TestCase
       without_grant do
         @u = User.make!
         @o = Organization.make!
-        @u.join(@o)
+        @o.add_member(@u)
       end
     end
 
     should "succeed" do
-      assert @u.member_of?(@o)
+      assert @o.has_member?(@u)
     end
 
     should "not allow the user to be added again" do
       # TODO should this raise something more specific?
       assert_raise(Exception) do
-        @u.join(@o)
+        @o.add_member(@u)
       end
     end
 
@@ -51,12 +51,12 @@ class MembershipTest < ActiveSupport::TestCase
 
       setup do
         without_grant do
-          @u.leave(@o)
+          @o.remove_member(@u)
         end
       end
 
       should "remove that user from that organization" do
-        assert !@u.member_of?(@o)
+        assert !@o.has_member?(@u)
       end
 
     end
