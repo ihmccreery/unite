@@ -41,8 +41,7 @@ class StarTest < ActiveSupport::TestCase
     end
 
     should "not allow the user to star that organization again" do
-      # TODO should this raise something more specific?
-      assert_raise(Exception) do
+      assert_raise(Star::Error) do
         @o.add_starrer(@u)
       end
     end

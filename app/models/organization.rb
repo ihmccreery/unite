@@ -28,14 +28,14 @@ class Organization < ActiveRecord::Base
 
   def add_member(user)
     if self.has_member?(user)
-      raise Exception, "#{user.username} is already a member of #{self.title}"
+      raise Membership::Error, "#{user.username} is already a member of #{self.title}"
     end
     self.members << user
   end
 
   def remove_member(user)
     unless self.has_member?(user)
-      raise Exception, "#{user.username} is not a member of #{self.title}"
+      raise Membership::Error, "#{user.username} is not a member of #{self.title}"
     end
     self.members.delete(user)
   end
@@ -46,14 +46,14 @@ class Organization < ActiveRecord::Base
 
   def add_watcher(user)
     if self.watched_by?(user)
-      raise Exception, "#{user.username} is already watching #{self.title}"
+      raise Watch::Error, "#{user.username} is already watching #{self.title}"
     end
     self.watchers << user
   end
 
   def remove_watcher(user)
     unless self.watched_by?(user)
-      raise Exception, "#{user.username} is not watching #{self.title}"
+      raise Watch::Error, "#{user.username} is not watching #{self.title}"
     end
     self.watchers.delete(user)
   end
@@ -64,14 +64,14 @@ class Organization < ActiveRecord::Base
 
   def add_starrer(user)
     if self.starred_by?(user)
-      raise Exception, "#{user.username} has already starred #{self.title}"
+      raise Star::Error, "#{user.username} has already starred #{self.title}"
     end
     self.starrers << user
   end
 
   def remove_starrer(user)
     unless self.starred_by?(user)
-      raise Exception, "#{user.username} has not starred #{self.title}"
+      raise Star::Error, "#{user.username} has not starred #{self.title}"
     end
     self.starrers.delete(user)
   end

@@ -41,8 +41,7 @@ class MembershipTest < ActiveSupport::TestCase
     end
 
     should "not allow the user to be added again" do
-      # TODO should this raise something more specific?
-      assert_raise(Exception) do
+      assert_raise(Membership::Error) do
         @o.add_member(@u)
       end
     end
