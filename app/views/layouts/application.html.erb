@@ -17,7 +17,12 @@
         <div class="container">
           <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
             <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
+            <% if user_signed_in? %>
+              <span class="icon-bar"></span>
+              <span class="icon-bar"></span>
+            <% else %>
+              <span class="icon-bar"></span>
+            <% end %>
           </a>
           <a class="brand" href="/">Unite</a>
           <div class="container nav-collapse">
@@ -38,20 +43,20 @@
     </div>
 
     <div class="container" id="content_container">
-      <!--[if IE]>
-        <div class="alert alert-error fade in">
-          You are using Internet Explorer.  We recommend using a different browser:
-          <%= link_to "Safari", "http://www.apple.com/safari", target: "_blank" %>,
-          <%= link_to "Chrome", "http://www.google.com/chrome", target: "_blank" %>,
-          or
-          <%= link_to "Firefox", "http://www.getfirefox.com/", target: "_blank" %>
-        </div>
-      <![endif]-->
       <div class="row">
         <div class="span12">
+          <!--[if IE]>
+            <div class="alert alert-error fade in">
+              You are using Internet Explorer.  We recommend using a different browser:
+              <%= link_to "Safari", "http://www.apple.com/safari", target: "_blank" %>,
+              <%= link_to "Chrome", "http://www.google.com/chrome", target: "_blank" %>,
+              <%= link_to "Firefox", "http://www.getfirefox.com/", target: "_blank" %>,
+              or
+              <%= link_to "Opera", "www.opera.com/", target: "_blank" %>
+            </div>
+          <![endif]-->
           <%= render 'layouts/flash_messages' %>
           <%= yield %>
-        </div>
         </div><!--/span-->
       </div><!--/row-->
 
