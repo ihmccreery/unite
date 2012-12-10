@@ -88,15 +88,12 @@ class OrganizationsController < ApplicationController
   # POST /o/1/join.json
   def join
     @organization = Organization.find(params[:id].downcase)
+    @organization.add_member(current_user)
 
+    # TODO make this more sensible, maybe based on success/failure
     respond_to do |format|
-      if @organization.add_member(current_user)
-        format.html { redirect_to @organization, notice: 'Organization was successfully joined.' }
-        format.json { render json: @organization, status: :joined, location: @organization }
-      else
-        format.html { redirect_to @organization, notice: 'Organization was not successfully joined.' }
-        format.json { render json: @organization, status: :unprocessable_entity }
-      end
+      format.html { redirect_to @organization }
+      format.json { render json: @organization }
     end
   end
 
@@ -104,15 +101,12 @@ class OrganizationsController < ApplicationController
   # POST /o/1/leave.json
   def leave
     @organization = Organization.find(params[:id].downcase)
+    @organization.remove_member(current_user)
 
+    # TODO make this more sensible, maybe based on success/failure
     respond_to do |format|
-      if @organization.remove_member(current_user)
-        format.html { redirect_to @organization, notice: 'Organization was successfully left.' }
-        format.json { render json: @organization, status: :leaveed, location: @organization }
-      else
-        format.html { redirect_to @organization, notice: 'Organization was not successfully left.' }
-        format.json { render json: @organization, status: :unprocessable_entity }
-      end
+      format.html { redirect_to @organization }
+      format.json { render json: @organization }
     end
   end
 
@@ -120,15 +114,12 @@ class OrganizationsController < ApplicationController
   # POST /o/1/watch.json
   def watch
     @organization = Organization.find(params[:id].downcase)
+    @organization.add_watcher(current_user)
 
+    # TODO make this more sensible, maybe based on success/failure
     respond_to do |format|
-      if @organization.add_watcher(current_user)
-        format.html { redirect_to @organization, notice: 'Organization was successfully watched.' }
-        format.json { render json: @organization, status: :watched, location: @organization }
-      else
-        format.html { redirect_to @organization, notice: 'Organization was not successfully watched.' }
-        format.json { render json: @organization, status: :unprocessable_entity }
-      end
+      format.html { redirect_to @organization }
+      format.json { render json: @organization }
     end
   end
 
@@ -136,15 +127,12 @@ class OrganizationsController < ApplicationController
   # POST /o/1/unwatch.json
   def unwatch
     @organization = Organization.find(params[:id].downcase)
+    @organization.remove_watcher(current_user)
 
+    # TODO make this more sensible, maybe based on success/failure
     respond_to do |format|
-      if @organization.remove_watcher(current_user)
-        format.html { redirect_to @organization, notice: 'Organization was successfully unwatched.' }
-        format.json { render json: @organization, status: :unwatched, location: @organization }
-      else
-        format.html { redirect_to @organization, notice: 'Organization was not successfully unwatched.' }
-        format.json { render json: @organization, status: :unprocessable_entity }
-      end
+      format.html { redirect_to @organization }
+      format.json { render json: @organization }
     end
   end
 
@@ -152,15 +140,12 @@ class OrganizationsController < ApplicationController
   # POST /o/1/star.json
   def star
     @organization = Organization.find(params[:id].downcase)
+    @organization.add_starrer(current_user)
 
+    # TODO make this more sensible, maybe based on success/failure
     respond_to do |format|
-      if @organization.add_starrer(current_user)
-        format.html { redirect_to @organization, notice: 'Organization was successfully starred.' }
-        format.json { render json: @organization, status: :starred, location: @organization }
-      else
-        format.html { redirect_to @organization, notice: 'Organization was not successfully starred.' }
-        format.json { render json: @organization, status: :unprocessable_entity }
-      end
+      format.html { redirect_to @organization }
+      format.json { render json: @organization }
     end
   end
 
@@ -168,15 +153,12 @@ class OrganizationsController < ApplicationController
   # POST /o/1/unstar.json
   def unstar
     @organization = Organization.find(params[:id].downcase)
+    @organization.remove_starrer(current_user)
 
+    # TODO make this more sensible, maybe based on success/failure
     respond_to do |format|
-      if @organization.remove_starrer(current_user)
-        format.html { redirect_to @organization, notice: 'Organization was successfully unstarred.' }
-        format.json { render json: @organization, status: :unstarred, location: @organization }
-      else
-        format.html { redirect_to @organization, notice: 'Organization was not successfully unstarred.' }
-        format.json { render json: @organization, status: :unprocessable_entity }
-      end
+      format.html { redirect_to @organization }
+      format.json { render json: @organization }
     end
   end
 
