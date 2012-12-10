@@ -2,63 +2,103 @@ require 'test_helper'
 
 class OrganizationTest < ActiveSupport::TestCase
 
-  context "all fixtures" do
-    should "be valid" do
-      Organization.all.each do |organization|
-        assert organization.valid?
+  # security
+
+  context "a user who is a member of an organization" do
+
+    setup do
+      without_grant do
+        @o = Organization.make!
+        Grant::User.current_user = @u = User.make!
+        @o.add_member(@u)
       end
     end
+
+    should "be able to save that organization" do
+      assert_nothing_raised(Grant::Error) { @o.save }
+    end
+
+    should "be able to destroy that organization" do
+      assert_nothing_raised(Grant::Error) { @o.save }
+    end
+
   end
+
+  context "a user who is not a member of an organization" do
+
+    setup do
+      without_grant do
+        @o = Organization.make!
+        Grant::User.current_user = User.make!
+      end
+    end
+
+    should "not be able to save that organization" do
+      assert_raise(Grant::Error) { @o.save }
+    end
+
+    should "not be able to destroy that organization" do
+      assert_raise(Grant::Error) { @o.destroy }
+    end
+
+  end
+
+  # validations
 
   context "an organization" do
 
     setup do
-      @af = Organization.new(title: "Anti-Frack",
-                             slug: "af",
-                             description: "Let's not get fracked.")
-    end
-
-    context "that is valid" do
-      should "be valid" do
-        assert @af.valid?
+      without_grant do
+        @o = Organization.make!
       end
     end
 
-    context "that is empty" do
-      should "be invalid" do
-        o = Organization.new
-        assert o.invalid?
-        assert o.errors[:title].any?
-        assert o.errors[:slug].any?
-        assert o.errors[:description].any?
-      end
+    should "be valid" do
+      assert @o.valid?
     end
 
     context "with a valid slug" do
       should "be valid" do
-        ['a_f', 'a-f', 'A-F'].each do |slug|
-          @af.slug = slug
-          assert @af.valid?, "#{slug} should be a valid slug"
+        ['o_o', 'o-o'].each do |slug|
+          @o.slug = slug
+          assert @o.valid?, "#{slug} should be a valid slug"
         end
       end
     end
 
     context "with an invalid slug" do
       should "be invalid" do
-        ['a f', '\af', 'a@f', ' ', 'new', 'edit'].each do |slug|
-          @af.slug = slug
-          assert @af.invalid?
-          assert @af.errors[:slug].any?, "#{slug} should be an invalid slug"
+        ['o o', '\o', 'o@', ' ', 'O-O', 'new', 'edit'].each do |slug|
+          @o.slug = slug
+          assert @o.invalid?
+          assert @o.errors[:slug].any?, "#{slug} should be an invalid slug"
         end
       end
     end
 
     context "with a duplicate slug" do
       should "be invalid" do
-        @af.slug = "mommas_books"
-        assert @af.invalid?
-        assert @af.errors[:slug].any?
+        o = Organization.make slug: @o.slug
+        assert o.invalid?
+        assert o.errors[:slug].any?
       end
+    end
+
+  end
+
+  context "an empty organization" do
+
+    setup do
+      without_grant do
+        @o = Organization.new
+      end
+    end
+
+    should "be invalid" do
+      assert @o.invalid?
+      assert @o.errors[:title].any?
+      assert @o.errors[:slug].any?
+      assert @o.errors[:description].any?
     end
 
   end

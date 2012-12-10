@@ -73,4 +73,34 @@
   </ul>
 </div>
 
+<h3>
+  <%# TODO make tip that a user must be signed in %>
+  <% if current_user && @organization.has_member?(current_user) %>
+    <%= link_to 'Leave', leave_organization_path(@organization), method: :delete %>
+  <% else %>
+    <%= link_to 'Join', join_organization_path(@organization), method: :post %>
+  <% end %>
+</h3>
+<h3>
+  <%# TODO make tip that a user must be signed in %>
+  <% if current_user && @organization.watched_by?(current_user) %>
+    <%= link_to 'Unwatch', unwatch_organization_path(@organization), method: :delete %>
+  <% else %>
+    <%= link_to 'Watch', watch_organization_path(@organization), method: :post %>
+  <% end %>
+</h3>
+<h3>
+  <%# TODO make tip that a user must be signed in %>
+  <% if current_user && @organization.starred_by?(current_user) %>
+    <%= link_to 'Unstar', unstar_organization_path(@organization), method: :delete %>
+  <% else %>
+    <%= link_to 'Star', star_organization_path(@organization), method: :post %>
+  <% end %>
+</h3>
 <p><%= @organization.description %></p>
+
+<ul>
+  <% if @organization.granted?(:update) %>
+    <li><%= link_to 'Edit', edit_organization_path(@organization) %></li>
+  <% end %>
+</ul>

@@ -25,6 +25,7 @@ end
 # Gems used only for tests and not required
 # in production environments by default.
 group :test do
+  gem 'machinist'
   gem 'shoulda'
 end
 
@@ -47,6 +48,9 @@ gem 'jquery-rails'
 
 # To use Devise for users
 gem 'devise'
+
+# To use Grant for security
+gem 'grant'
 
 # To use Twitter Bootstrap for layout, styles, and Javascript
 gem 'therubyracer'

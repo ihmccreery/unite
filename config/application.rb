@@ -58,5 +58,10 @@ module Unite
 
     # Version of your assets, change this if you want to expire all your assets
     config.assets.version = '1.0'
+
+    # For Machinist to automatically add blueprints
+    config.generators do |g|
+      g.fixture_replacement :machinist
+    end
   end
 end

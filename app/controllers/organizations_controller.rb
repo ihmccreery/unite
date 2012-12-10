@@ -1,6 +1,9 @@
 class OrganizationsController < ApplicationController
-  # GET /organizations
-  # GET /organizations.json
+
+  before_filter :authenticate_user!, :only => [:new, :join, :watch, :star]
+
+  # GET /o
+  # GET /o.json
   def index
     @organizations = Organization.all
 
@@ -10,10 +13,10 @@ class OrganizationsController < ApplicationController
     end
   end
 
-  # GET /organizations/1
-  # GET /organizations/1.json
+  # GET /o/1
+  # GET /o/1.json
   def show
-    @organization = Organization.find(params[:id])
+    @organization = Organization.find(params[:id].downcase)
 
     respond_to do |format|
       format.html # show.html.erb
@@ -21,8 +24,8 @@ class OrganizationsController < ApplicationController
     end
   end
 
-  # GET /organizations/new
-  # GET /organizations/new.json
+  # GET /o/new
+  # GET /o/new.json
   def new
     @organization = Organization.new
 
@@ -32,13 +35,13 @@ class OrganizationsController < ApplicationController
     end
   end
 
-  # GET /organizations/1/edit
+  # GET /o/1/edit
   def edit
-    @organization = Organization.find(params[:id])
+    @organization = Organization.find(params[:id].downcase)
   end
 
-  # POST /organizations
-  # POST /organizations.json
+  # POST /o
+  # POST /o.json
   def create
     @organization = Organization.new(params[:organization])
 
@@ -53,10 +56,10 @@ class OrganizationsController < ApplicationController
     end
   end
 
-  # PUT /organizations/1
-  # PUT /organizations/1.json
+  # PUT /o/1
+  # PUT /o/1.json
   def update
-    @organization = Organization.find(params[:id])
+    @organization = Organization.find(params[:id].downcase)
 
     respond_to do |format|
       if @organization.update_attributes(params[:organization])
@@ -69,10 +72,10 @@ class OrganizationsController < ApplicationController
     end
   end
 
-  # DELETE /organizations/1
-  # DELETE /organizations/1.json
+  # DELETE /o/1
+  # DELETE /o/1.json
   def destroy
-    @organization = Organization.find(params[:id])
+    @organization = Organization.find(params[:id].downcase)
     @organization.destroy
 
     respond_to do |format|
@@ -80,4 +83,83 @@ class OrganizationsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
+  # POST /o/1/join
+  # POST /o/1/join.json
+  def join
+    @organization = Organization.find(params[:id].downcase)
+    @organization.add_member(current_user)
+
+    # TODO make this more sensible, maybe based on success/failure
+    respond_to do |format|
+      format.html { redirect_to @organization }
+      format.json { render json: @organization }
+    end
+  end
+
+  # POST /o/1/leave
+  # POST /o/1/leave.json
+  def leave
+    @organization = Organization.find(params[:id].downcase)
+    @organization.remove_member(current_user)
+
+    # TODO make this more sensible, maybe based on success/failure
+    respond_to do |format|
+      format.html { redirect_to @organization }
+      format.json { render json: @organization }
+    end
+  end
+
+  # POST /o/1/watch
+  # POST /o/1/watch.json
+  def watch
+    @organization = Organization.find(params[:id].downcase)
+    @organization.add_watcher(current_user)
+
+    # TODO make this more sensible, maybe based on success/failure
+    respond_to do |format|
+      format.html { redirect_to @organization }
+      format.json { render json: @organization }
+    end
+  end
+
+  # POST /o/1/unwatch
+  # POST /o/1/unwatch.json
+  def unwatch
+    @organization = Organization.find(params[:id].downcase)
+    @organization.remove_watcher(current_user)
+
+    # TODO make this more sensible, maybe based on success/failure
+    respond_to do |format|
+      format.html { redirect_to @organization }
+      format.json { render json: @organization }
+    end
+  end
+
+  # POST /o/1/star
+  # POST /o/1/star.json
+  def star
+    @organization = Organization.find(params[:id].downcase)
+    @organization.add_starrer(current_user)
+
+    # TODO make this more sensible, maybe based on success/failure
+    respond_to do |format|
+      format.html { redirect_to @organization }
+      format.json { render json: @organization }
+    end
+  end
+
+  # POST /o/1/unstar
+  # POST /o/1/unstar.json
+  def unstar
+    @organization = Organization.find(params[:id].downcase)
+    @organization.remove_starrer(current_user)
+
+    # TODO make this more sensible, maybe based on success/failure
+    respond_to do |format|
+      format.html { redirect_to @organization }
+      format.json { render json: @organization }
+    end
+  end
+
 end
