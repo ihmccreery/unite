@@ -2,4 +2,14 @@
 # See https://github.com/svenfuchs/rails-i18n/tree/master/rails%2Flocale for starting points.
 
 en:
-  hello: "Hello world"
+  activerecord:
+    errors:
+      models:
+        organization:
+          attributes:
+            slug:
+              invalid: "must consist only of lowercase letters, digits, '-', and '_'"
+        user:
+          attributes:
+            username:
+              invalid: "must consist only of lowercase letters, digits, '-', and '_'"
