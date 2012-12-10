@@ -15,11 +15,11 @@ class StarTest < ActiveSupport::TestCase
     end
 
     should "be able to star an organization" do
-      assert_nothing_raised(Grant::Error) { @o.add_starrer!(@u) }
+      assert_nothing_raised(Grant::Error) { @o.add_starrer(@u) }
     end
 
     should "not be able to star an organization for another user" do
-      assert_raise(Grant::Error) { @o.add_starrer!(@v) }
+      assert_raise(Grant::Error) { @o.add_starrer(@v) }
     end
 
   end
@@ -32,7 +32,7 @@ class StarTest < ActiveSupport::TestCase
       without_grant do
         @u = User.make!
         @o = Organization.make!
-        @o.add_starrer!(@u)
+        @o.add_starrer(@u)
       end
     end
 
@@ -41,8 +41,8 @@ class StarTest < ActiveSupport::TestCase
     end
 
     should "not allow the user to star that organization again" do
-      assert_raise(Star::Error) do
-        @o.add_starrer!(@u)
+      assert_raise(ActiveRecord::RecordInvalid) do
+        @o.add_starrer(@u)
       end
     end
 
@@ -50,7 +50,7 @@ class StarTest < ActiveSupport::TestCase
 
       setup do
         without_grant do
-          @o.remove_starrer!(@u)
+          @o.remove_starrer(@u)
         end
       end
 

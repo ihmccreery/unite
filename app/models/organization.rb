@@ -29,31 +29,11 @@ class Organization < ActiveRecord::Base
   # memberships
 
   def add_member(user)
-    if self.has_member?(user)
-      return false
-    else
-      self.members << user
-    end
-  end
-
-  def add_member!(user)
-    unless self.add_member(user)
-      raise Membership::Error, "#{user.username} is already a member of #{self.title}"
-    end
+    self.members << user
   end
 
   def remove_member(user)
-    unless self.has_member?(user)
-      return false
-    else
-      self.members.delete(user)
-    end
-  end
-
-  def remove_member!(user)
-    unless self.remove_member(user)
-      raise Membership::Error, "#{user.username} is not a member of #{self.title}"
-    end
+    self.members.delete(user)
   end
 
   def has_member?(user)
@@ -63,31 +43,11 @@ class Organization < ActiveRecord::Base
   # watches
 
   def add_watcher(user)
-    if self.watched_by?(user)
-      return false
-    else
-      self.watchers << user
-    end
-  end
-
-  def add_watcher!(user)
-    unless self.add_watcher(user)
-      raise Watch::Error, "#{user.username} is already watching #{self.title}"
-    end
+    self.watchers << user
   end
 
   def remove_watcher(user)
-    unless self.watched_by?(user)
-      false
-    else
-      self.watchers.delete(user)
-    end
-  end
-
-  def remove_watcher!(user)
-    unless self.remove_watcher(user)
-      raise Watch::Error, "#{user.username} is not watching #{self.title}"
-    end
+    self.watchers.delete(user)
   end
 
   def watched_by?(user)
@@ -97,31 +57,11 @@ class Organization < ActiveRecord::Base
   # stars
 
   def add_starrer(user)
-    if self.starred_by?(user)
-      return false
-    else
-      self.starrers << user
-    end
-  end
-
-  def add_starrer!(user)
-    unless self.add_starrer(user)
-      raise Star::Error, "#{user.username} has already starred #{self.title}"
-    end
+    self.starrers << user
   end
 
   def remove_starrer(user)
-    unless self.starred_by?(user)
-      return false
-    else
-      self.starrers.delete(user)
-    end
-  end
-
-  def remove_starrer!(user)
-    unless self.remove_starrer(user)
-      raise Star::Error, "#{user.username} has not starred #{self.title}"
-    end
+    self.starrers.delete(user)
   end
 
   def starred_by?(user)

@@ -15,11 +15,11 @@ class WatchTest < ActiveSupport::TestCase
     end
 
     should "be able to watch an organization" do
-      assert_nothing_raised(Grant::Error) { @o.add_watcher!(@u) }
+      assert_nothing_raised(Grant::Error) { @o.add_watcher(@u) }
     end
 
     should "not be able to watch an organization for another user" do
-      assert_raise(Grant::Error) { @o.add_watcher!(@v) }
+      assert_raise(Grant::Error) { @o.add_watcher(@v) }
     end
 
   end
@@ -32,7 +32,7 @@ class WatchTest < ActiveSupport::TestCase
       without_grant do
         @u = User.make!
         @o = Organization.make!
-        @o.add_watcher!(@u)
+        @o.add_watcher(@u)
       end
     end
 
@@ -41,8 +41,8 @@ class WatchTest < ActiveSupport::TestCase
     end
 
     should "not allow the user to watch that organization again" do
-      assert_raise(Watch::Error) do
-        @o.add_watcher!(@u)
+      assert_raise(ActiveRecord::RecordInvalid) do
+        @o.add_watcher(@u)
       end
     end
 
@@ -50,7 +50,7 @@ class WatchTest < ActiveSupport::TestCase
 
       setup do
         without_grant do
-          @o.remove_watcher!(@u)
+          @o.remove_watcher(@u)
         end
       end
 
