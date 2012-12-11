@@ -97,7 +97,7 @@
     <%= link_to 'Star', star_organization_path(@organization), method: :post %>
   <% end %>
 </h3>
-<p><%= @organization.description %></p>
+<p><%= markdown_to_html(@organization.description) %></p>
 
 <ul>
   <% if @organization.granted?(:update) %>
