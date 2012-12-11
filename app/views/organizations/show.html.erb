@@ -20,7 +20,7 @@
   <%= link_to '<i class="icon-star"></i> Star'.html_safe, star_organization_path(@organization), method: :post, class: "btn" %>
 <% end %>
 
-<p><%= @organization.description %></p>
+<p><%= markdown_to_html(@organization.description) %></p>
 
 <ul>
   <% if @organization.granted?(:update) %>
