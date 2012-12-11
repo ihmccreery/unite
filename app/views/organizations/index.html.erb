@@ -1,11 +1,11 @@
-<div id="organization-actions" class="btn-toolbar">
-  <% if Organization.new.granted?(:create) %>
-    <%= link_to '<i class="icon-plus"></i> New organization'.html_safe, new_organization_path, class: "btn" %>
-  <% end %>
-</div>
-
 <div class="page-header">
-  <h2>Organizations</h2>
+  <div id="organization-actions" class="btn-toolbar">
+    <% if Organization.new.granted?(:create) %>
+      <%= link_to '<i class="icon-plus"></i> New organization'.html_safe, new_organization_path, class: "btn" %>
+    <% end %>
+  </div>
+
+  <h3>Organizations</h3>
 </div>
 
 <% @organizations.each do |organization| %>
