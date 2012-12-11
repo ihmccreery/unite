@@ -1,29 +1,23 @@
 <h1><%= link_to @organization.title, @organization %></h1>
 <h2><%= @organization.subtitle %></h2>
-<h3>
   <%# TODO make tip that a user must be signed in %>
   <% if current_user && @organization.has_member?(current_user) %>
-    <%= link_to 'Leave', leave_organization_path(@organization), method: :delete %>
+    <%= link_to '<i class="icon-minus"></i> Leave'.html_safe, leave_organization_path(@organization), method: :delete, class: "btn" %>
   <% else %>
-    <%= link_to 'Join', join_organization_path(@organization), method: :post %>
+    <%= link_to '<i class="icon-plus"></i> Join'.html_safe, join_organization_path(@organization), method: :post, class: "btn" %>
   <% end %>
-</h3>
-<h3>
   <%# TODO make tip that a user must be signed in %>
   <% if current_user && @organization.watched_by?(current_user) %>
-    <%= link_to 'Unwatch', unwatch_organization_path(@organization), method: :delete %>
+    <%= link_to '<i class="icon-eye-open"></i> Unwatch'.html_safe, unwatch_organization_path(@organization), method: :delete, class: "btn" %>
   <% else %>
-    <%= link_to 'Watch', watch_organization_path(@organization), method: :post %>
+    <%= link_to '<i class="icon-eye-open"></i> Watch'.html_safe, watch_organization_path(@organization), method: :post, class: "btn" %>
   <% end %>
-</h3>
-<h3>
   <%# TODO make tip that a user must be signed in %>
   <% if current_user && @organization.starred_by?(current_user) %>
-    <%= link_to 'Unstar', unstar_organization_path(@organization), method: :delete %>
+    <%= link_to '<i class="icon-star"></i> Unstar'.html_safe, unstar_organization_path(@organization), method: :delete, class: "btn" %>
   <% else %>
-    <%= link_to 'Star', star_organization_path(@organization), method: :post %>
+    <%= link_to '<i class="icon-star"></i> Star'.html_safe, star_organization_path(@organization), method: :post, class: "btn" %>
   <% end %>
-</h3>
 <p><%= @organization.description %></p>
 
 <ul>
