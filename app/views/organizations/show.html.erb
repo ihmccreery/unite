@@ -20,8 +20,8 @@
     <% end %>
   </div>
 
-  <h1><%= link_to @organization.title, @organization %></h1>
-  <h2><%= @organization.subtitle %></h2>
+  <h3><%= link_to @organization.title, @organization %></h3>
+  <h4><%= @organization.subtitle %></h4>
 </div>
 
 <p><%= markdown_to_html(@organization.description) %></p>
