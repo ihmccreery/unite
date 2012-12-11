@@ -9,13 +9,13 @@
 <% end %>
 <%# TODO make tip that a user must be signed in %>
 <% if current_user && @organization.watched_by?(current_user) %>
-  <%= link_to '<i class="icon-eye-open"></i> Unwatch'.html_safe, unwatch_organization_path(@organization), method: :delete, class: "btn" %>
+  <%= link_to '<i class="icon-eye-close"></i> Unwatch'.html_safe, unwatch_organization_path(@organization), method: :delete, class: "btn" %>
 <% else %>
   <%= link_to '<i class="icon-eye-open"></i> Watch'.html_safe, watch_organization_path(@organization), method: :post, class: "btn" %>
 <% end %>
 <%# TODO make tip that a user must be signed in %>
 <% if current_user && @organization.starred_by?(current_user) %>
-  <%= link_to '<i class="icon-star"></i> Unstar'.html_safe, unstar_organization_path(@organization), method: :delete, class: "btn" %>
+  <%= link_to '<i class="icon-star-empty"></i> Unstar'.html_safe, unstar_organization_path(@organization), method: :delete, class: "btn" %>
 <% else %>
   <%= link_to '<i class="icon-star"></i> Star'.html_safe, star_organization_path(@organization), method: :post, class: "btn" %>
 <% end %>
