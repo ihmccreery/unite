@@ -29,7 +29,7 @@
             <ul class="nav">
               <li><%= link_to "Organizations", organizations_path  %></li>
             </ul>
-            <ul id="user_nav" class="nav">
+            <ul id="user-nav" class="nav">
               <% if user_signed_in? %>
                 <li><%= link_to "Account settings", edit_user_registration_path %></li>
                 <li><%= link_to "Sign out", destroy_user_session_path, :method => :delete %></li>
@@ -42,7 +42,7 @@
       </div>
     </div>
 
-    <div class="container" id="content_container">
+    <div class="container" id="content-container">
       <div class="row">
         <div class="span12">
           <!--[if IE]>
