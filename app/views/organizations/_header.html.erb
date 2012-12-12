@@ -3,8 +3,6 @@
     <%# TODO make tip that a user must be signed in %>
     <% if current_user && @organization.has_member?(current_user) %>
       <%= link_to '<i class="icon-cog"></i> Admin'.html_safe, edit_organization_path(@organization), class: "btn" %>
-    <% else %>
-      <%= link_to '<i class="icon-plus"></i> Join'.html_safe, join_organization_path(@organization), method: :post, class: "btn" %>
     <% end %>
     <%# TODO make tip that a user must be signed in %>
     <% if current_user && @organization.watched_by?(current_user) %>

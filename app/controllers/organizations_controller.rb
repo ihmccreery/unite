@@ -1,6 +1,6 @@
 class OrganizationsController < ApplicationController
 
-  before_filter :authenticate_user!, :only => [:new, :join, :watch, :star]
+  before_filter :authenticate_user!, :only => [:new, :add_member, :watch, :star]
 
   # GET /o
   # GET /o.json
@@ -84,11 +84,12 @@ class OrganizationsController < ApplicationController
     end
   end
 
-  # POST /o/1/join
-  # POST /o/1/join.json
-  def join
+  # POST /o/1/add_member
+  # POST /o/1/add_member.json
+  def add_member
     @organization = Organization.find(params[:id].downcase)
-    @organization.add_member(current_user)
+    @user = User.find_by_username(params[:user][:username].downcase)
+    @organization.add_member(@user)
 
     # TODO make this more sensible, maybe based on success/failure
     respond_to do |format|

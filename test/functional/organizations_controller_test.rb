@@ -11,6 +11,7 @@ class OrganizationsControllerTest < ActionController::TestCase
                        slug: "so",
                        description: "We do stuff."}
         sign_in @u = User.make!
+        @v = User.make!
       end
     end
 
@@ -56,57 +57,6 @@ class OrganizationsControllerTest < ActionController::TestCase
     #   assert_redirected_to organizations_path
     # end
 
-    should "join organization" do
-      assert_difference('Membership.count') do
-        post :join, id: @o
-      end
-
-      assert_redirected_to organization_path(assigns(:organization))
-    end
-
-    should "leave organization" do
-      @o.add_member(@u)
-      assert_difference('Membership.count', -1) do
-        delete :leave, id: @o
-      end
-
-      assert_redirected_to organization_path(assigns(:organization))
-    end
-
-    should "watch organization" do
-      assert_difference('Watch.count') do
-        post :watch, id: @o
-      end
-
-      assert_redirected_to organization_path(assigns(:organization))
-    end
-
-    should "unwatch organization" do
-      @o.add_watcher(@u)
-      assert_difference('Watch.count', -1) do
-        delete :unwatch, id: @o
-      end
-
-      assert_redirected_to organization_path(assigns(:organization))
-    end
-
-    should "star organization" do
-      assert_difference('Star.count') do
-        post :star, id: @o
-      end
-
-      assert_redirected_to organization_path(assigns(:organization))
-    end
-
-    should "unstar organization" do
-      @o.add_starrer(@u)
-      assert_difference('Star.count', -1) do
-        delete :unstar, id: @o
-      end
-
-      assert_redirected_to organization_path(assigns(:organization))
-    end
-
     context "who is a member of the organization" do
 
       setup do
@@ -131,6 +81,70 @@ class OrganizationsControllerTest < ActionController::TestCase
         end
 
         assert_redirected_to organizations_path
+      end
+
+      should "add a member to that organization" do
+        assert_difference('Membership.count') do
+          post :add_member, id: @o, user: { username: @v.username }
+        end
+
+        assert_redirected_to organization_path(assigns(:organization))
+      end
+
+      should "leave organization" do
+        assert_difference('Membership.count', -1) do
+          delete :leave, id: @o
+        end
+
+        assert_redirected_to organization_path(assigns(:organization))
+      end
+
+    end
+
+    should "watch organization" do
+      assert_difference('Watch.count') do
+        post :watch, id: @o
+      end
+
+      assert_redirected_to organization_path(assigns(:organization))
+    end
+
+    context "who is watching the organization" do
+
+      setup do
+        @o.add_watcher(@u)
+      end
+
+      should "unwatch organization" do
+        assert_difference('Watch.count', -1) do
+          delete :unwatch, id: @o
+        end
+
+        assert_redirected_to organization_path(assigns(:organization))
+      end
+
+    end
+
+    should "star organization" do
+      assert_difference('Star.count') do
+        post :star, id: @o
+      end
+
+      assert_redirected_to organization_path(assigns(:organization))
+    end
+
+    context "who has starred the organization" do
+
+      setup do
+        @o.add_starrer(@u)
+      end
+
+      should "unstar organization" do
+        assert_difference('Star.count', -1) do
+          delete :unstar, id: @o
+        end
+
+        assert_redirected_to organization_path(assigns(:organization))
       end
 
     end
