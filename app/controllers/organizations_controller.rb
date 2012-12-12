@@ -1,6 +1,6 @@
 class OrganizationsController < ApplicationController
 
-  before_filter :authenticate_user!, :only => [:new, :add_member, :watch, :star]
+  before_filter :authenticate_user!, :only => [:new, :watch, :star]
 
   # GET /o
   # GET /o.json
