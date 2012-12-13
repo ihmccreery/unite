@@ -98,7 +98,7 @@ class OrganizationsController < ApplicationController
 
     # TODO make this more sensible, maybe based on success/failure
     respond_to do |format|
-      format.html { redirect_to @organization }
+      format.html { redirect_to membership_organization_path(@organization), notice: "User #{params[:user][:username]} added." }
       format.json { render json: @organization }
     end
   end
