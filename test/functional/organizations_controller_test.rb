@@ -98,7 +98,7 @@ class OrganizationsControllerTest < ActionController::TestCase
           post :add_member, id: @o, user: { username: @v.username }
         end
 
-        assert_redirected_to organization_path(assigns(:organization))
+        assert_redirected_to membership_organization_path(assigns(:organization))
       end
 
       should "leave organization" do
