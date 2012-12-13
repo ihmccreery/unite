@@ -14,12 +14,26 @@ class MembershipTest < ActiveSupport::TestCase
       end
     end
 
-    should "be able to join an organization" do
-      assert_nothing_raised(Grant::Error) { @o.add_member(@u) }
+    context "that is not a member of an organization" do
+
+      should "not be able to add another user to that organization" do
+        assert_raise(Grant::Error) { @o.add_member(@v) }
+      end
+
     end
 
-    should "not be able to add another user to an organization" do
-      assert_raise(Grant::Error) { @o.add_member(@v) }
+    context "that is a member of an organization" do
+
+      setup do
+        without_grant do
+          @o.add_member(@u)
+        end
+      end
+
+      should "be able to add another user to that organization" do
+        assert_nothing_raised(Grant::Error) { @o.add_member(@v) }
+      end
+
     end
 
   end

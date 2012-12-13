@@ -1,5 +1,7 @@
-<h1>Editing organization</h1>
+<%= render 'header' %>
+
+<%= link_to 'Edit', edit_organization_path(@organization) %>
+<%= link_to 'Membership', membership_organization_path(@organization) %>
+<%= link_to 'Leave', leave_organization_path(@organization), method: :delete %>
 
 <%= render 'form' %>
-
-<%= link_to 'Show', @organization %>

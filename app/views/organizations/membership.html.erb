@@ -1,0 +1,26 @@
+<%= render 'header' %>
+
+<%= link_to 'Edit', edit_organization_path(@organization) %>
+<%= link_to 'Membership', membership_organization_path(@organization) %>
+<%= link_to 'Leave', leave_organization_path(@organization), method: :delete %>
+
+<%= form_for :user, url: add_member_organization_path(@organization), html: { class: "form-horizontal" } do |f| %>
+  <%= f.label :username, class: "control-label" %>
+  <div class="controls">
+    <%= f.text_field :username %>
+  </div>
+  <div class="control-group">
+    <div class="controls">
+      <%= f.submit class: "btn" %>
+    </div>
+  </div>
+<% end %>
+
+<h1>
+  Current members
+</h1>
+<ul>
+<% @organization.members.each do |member| %>
+  <li><%= member.username %></li>
+<% end %>
+</ul>

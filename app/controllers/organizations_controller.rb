@@ -1,6 +1,8 @@
 class OrganizationsController < ApplicationController
 
-  before_filter :authenticate_user!, :only => [:new, :join, :watch, :star]
+  include Grant::Status
+
+  before_filter :authenticate_user!, :only => [:new, :watch, :star]
 
   # GET /o
   # GET /o.json
@@ -44,9 +46,11 @@ class OrganizationsController < ApplicationController
   # POST /o.json
   def create
     @organization = Organization.new(params[:organization])
+    success = @organization.save
+    without_grant { @organization.add_member(current_user) }
 
     respond_to do |format|
-      if @organization.save
+      if success
         format.html { redirect_to @organization, notice: 'Organization was successfully created.' }
         format.json { render json: @organization, status: :created, location: @organization }
       else
@@ -84,15 +88,21 @@ class OrganizationsController < ApplicationController
     end
   end
 
-  # POST /o/1/join
-  # POST /o/1/join.json
-  def join
+  # GET /o/1/edit
+  def membership
     @organization = Organization.find(params[:id].downcase)
-    @organization.add_member(current_user)
+  end
+
+  # POST /o/1/add_member
+  # POST /o/1/add_member.json
+  def add_member
+    @organization = Organization.find(params[:id].downcase)
+    @user = User.find_by_username(params[:user][:username].downcase)
+    @organization.add_member(@user)
 
     # TODO make this more sensible, maybe based on success/failure
     respond_to do |format|
-      format.html { redirect_to @organization }
+      format.html { redirect_to membership_organization_path(@organization), notice: "User #{params[:user][:username]} added." }
       format.json { render json: @organization }
     end
   end
