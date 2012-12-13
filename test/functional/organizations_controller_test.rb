@@ -26,11 +26,14 @@ class OrganizationsControllerTest < ActionController::TestCase
       assert_response :success
     end
 
-    should "create organization" do
+    should "create organization with a membership" do
       assert_difference('Organization.count') do
-        post :create, organization: @attributes
+        assert_difference('Membership.count') do
+          post :create, organization: @attributes
+        end
       end
 
+      assert assigns(:organization).has_member?(@u)
       assert_redirected_to organization_path(assigns(:organization))
     end
 

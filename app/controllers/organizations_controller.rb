@@ -1,5 +1,7 @@
 class OrganizationsController < ApplicationController
 
+  include Grant::Status
+
   before_filter :authenticate_user!, :only => [:new, :watch, :star]
 
   # GET /o
@@ -44,9 +46,11 @@ class OrganizationsController < ApplicationController
   # POST /o.json
   def create
     @organization = Organization.new(params[:organization])
+    success = @organization.save
+    without_grant { @organization.add_member(current_user) }
 
     respond_to do |format|
-      if @organization.save
+      if success
         format.html { redirect_to @organization, notice: 'Organization was successfully created.' }
         format.json { render json: @organization, status: :created, location: @organization }
       else
