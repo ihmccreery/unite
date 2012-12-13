@@ -84,6 +84,11 @@ class OrganizationsController < ApplicationController
     end
   end
 
+  # GET /o/1/edit
+  def membership
+    @organization = Organization.find(params[:id].downcase)
+  end
+
   # POST /o/1/add_member
   # POST /o/1/add_member.json
   def add_member
