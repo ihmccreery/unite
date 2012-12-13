@@ -94,4 +94,20 @@ class StarTest < ActiveSupport::TestCase
 
   end
 
+  context "an empty star" do
+
+    setup do
+      without_grant do
+        @s = Star.new
+      end
+    end
+
+    should "be invalid" do
+      assert @s.invalid?
+      assert @s.errors[:user].any?
+      assert @s.errors[:organization].any?
+    end
+
+  end
+
 end

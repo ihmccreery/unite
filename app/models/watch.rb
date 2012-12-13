@@ -7,5 +7,6 @@ class Watch < ActiveRecord::Base
   belongs_to :organization
 
   validates :organization_id, :uniqueness => { :scope => :user_id, :message => "is already watched by user" }
+  validates_presence_of :user, :organization
 
 end

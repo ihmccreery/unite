@@ -94,4 +94,20 @@ class WatchTest < ActiveSupport::TestCase
 
   end
 
+  context "an empty watch" do
+
+    setup do
+      without_grant do
+        @w = Watch.new
+      end
+    end
+
+    should "be invalid" do
+      assert @w.invalid?
+      assert @w.errors[:user].any?
+      assert @w.errors[:organization].any?
+    end
+
+  end
+
 end
