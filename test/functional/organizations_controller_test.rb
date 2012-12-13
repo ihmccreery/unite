@@ -44,6 +44,11 @@ class OrganizationsControllerTest < ActionController::TestCase
     #   assert_response :success
     # end
 
+    # should "get membership" do
+    #   get :membership, id: @o
+    #   assert_response :success
+    # end
+
     # should "update organization" do
     #   put :update, id: @o, organization: @attributes
     #   assert_redirected_to organization_path(assigns(:organization))
@@ -81,6 +86,11 @@ class OrganizationsControllerTest < ActionController::TestCase
         end
 
         assert_redirected_to organizations_path
+      end
+
+      should "get membership" do
+        get :membership, id: @o
+        assert_response :success
       end
 
       should "add a member to that organization" do
