@@ -11,7 +11,7 @@ module ApplicationHelper
 
   def markdown_to_html(text)
     markdown = Redcarpet::Markdown.new(Redcarpet::Render::HTML.new(:filter_html => true))
-    markdown.render(text).html_safe
+    Redcarpet::Render::SmartyPants.render(markdown.render(text)).html_safe
   end
 
 end
