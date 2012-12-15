@@ -41,6 +41,24 @@ class OrganizationTest < ActiveSupport::TestCase
       assert_raise(Grant::Error) { @o.destroy }
     end
 
+    should "be able to create an organization" do
+      assert_nothing_raised(Grant::Error) { Organization.make! }
+    end
+
+  end
+
+  context "the Anonymous user" do
+
+    setup do
+      without_grant do
+        Grant::User.current_user = nil
+      end
+    end
+
+    should "not be able to create an organization" do
+      assert_raise(Grant::Error) { Organization.make! }
+    end
+
   end
 
   # validations
