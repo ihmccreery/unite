@@ -5,23 +5,33 @@
   <li class="active"><%= link_to 'Membership', membership_organization_path(@organization) %></li>
 </ul>
 
-<%= form_for :user, url: add_member_organization_path(@organization), html: { class: "form-horizontal" } do |f| %>
-  <%= f.label :username, class: "control-label" %>
-  <div class="controls">
-    <%= f.text_field :username %>
-  </div>
-  <div class="control-group">
-    <div class="controls">
-      <%= f.submit class: "btn" %>
-    </div>
-  </div>
-<% end %>
+<div class="row">
 
-<h1>
-  Current members
-</h1>
-<ul>
-<% @organization.members.each do |member| %>
-  <li><%= member.username %></li>
-<% end %>
-</ul>
+  <div class="span6">
+    <%= form_for :user, url: add_member_organization_path(@organization), html: { class: "form-horizontal" } do |f| %>
+      <div class="control-group">
+        <%= f.label :username, class: "control-label" %>
+        <div class="controls">
+          <%= f.text_field :username %>
+        </div>
+      </div>
+      <div class="control-group">
+        <div class="controls">
+          <%= f.submit "Add member", class: "btn" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="span6">
+    <h4>
+      Current members
+    </h4>
+    <ul>
+    <% @organization.members.each do |member| %>
+      <li><%= member.username %></li>
+    <% end %>
+    </ul>
+  </div>
+
+</div>
