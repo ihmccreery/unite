@@ -108,4 +108,20 @@ class MembershipTest < ActiveSupport::TestCase
 
   end
 
+  context "an empty membership" do
+
+    setup do
+      without_grant do
+        @m = Membership.new
+      end
+    end
+
+    should "be invalid" do
+      assert @m.invalid?
+      assert @m.errors[:user].any?
+      assert @m.errors[:organization].any?
+    end
+
+  end
+
 end

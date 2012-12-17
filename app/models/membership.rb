@@ -8,5 +8,6 @@ class Membership < ActiveRecord::Base
   belongs_to :organization
 
   validates :organization_id, :uniqueness => { :scope => :user_id, :message => "already has member" }
+  validates_presence_of :user, :organization
 
 end
