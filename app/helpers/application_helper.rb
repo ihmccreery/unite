@@ -14,4 +14,16 @@ module ApplicationHelper
     Redcarpet::Render::SmartyPants.render(markdown.render(text)).html_safe
   end
 
+  def full_alerts(resource)
+    alerts = resource.errors.full_messages.map { |msg| content_tag(:div, msg, class: "alert alert-error fade in") }.join
+    html = <<-HTML
+    <div class="control-group">
+      <div class="controls">
+        #{alerts}
+      </div>
+    </div>
+    HTML
+    html.html_safe
+  end
+
 end
