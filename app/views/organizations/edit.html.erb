@@ -1,7 +1,8 @@
 <%= render 'header' %>
 
-<%= link_to 'Edit', edit_organization_path(@organization) %>
-<%= link_to 'Membership', membership_organization_path(@organization) %>
-<%= link_to 'Leave', leave_organization_path(@organization), method: :delete %>
+<ul class="nav nav-tabs">
+  <li class="active"><%= link_to 'Edit', edit_organization_path(@organization) %></li>
+  <li><%= link_to 'Membership', membership_organization_path(@organization) %></li>
+</ul>
 
 <%= render 'form' %>
