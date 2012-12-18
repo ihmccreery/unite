@@ -100,12 +100,34 @@ class OrganizationsControllerTest < ActionController::TestCase
         assert_redirected_to membership_organization_path(assigns(:organization))
       end
 
-      should "leave organization" do
-        assert_difference('Membership.count', -1) do
-          delete :leave, id: @o
+      context "as the only member" do
+
+        should "not leave organization" do
+          assert_no_difference('Membership.count', -1) do
+            delete :leave, id: @o
+          end
+
+          assert_response :success
         end
 
-        assert_redirected_to organization_path(assigns(:organization))
+      end
+
+      context "as not the only member" do
+
+        setup do
+          without_grant do
+            @o.add_member(@v)
+          end
+        end
+
+        should "leave organization" do
+          assert_difference('Membership.count', -1) do
+            delete :leave, id: @o
+          end
+
+          assert_redirected_to organization_path(assigns(:organization))
+        end
+
       end
 
       should "get delete" do
