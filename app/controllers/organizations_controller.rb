@@ -88,6 +88,7 @@ class OrganizationsController < ApplicationController
 
     if params[:organization] && (params[:organization][:title] == @organization.title) &&  (params[:organization][:slug] == @organization.slug)
       @organization.destroy
+      # TODO make this more sensible, maybe based on success/failure
       respond_to do |format|
         format.html { redirect_to organizations_url, notice: 'Organization was successfully destroyed.' }
         format.json { head :no_content }
@@ -126,13 +127,24 @@ class OrganizationsController < ApplicationController
   # POST /o/1/leave.json
   def leave
     @organization = Organization.find(params[:id].downcase)
-    @organization.remove_member(current_user)
 
-    # TODO make this more sensible, maybe based on success/failure
-    respond_to do |format|
-      format.html { redirect_to @organization }
-      format.json { render json: @organization }
+    unless @organization.members.reject{ |member| member == current_user }.empty?
+      @organization.remove_member(current_user)
+      # TODO make this more sensible, maybe based on success/failure
+      respond_to do |format|
+        format.html { redirect_to @organization }
+        format.json { render json: @organization }
+      end
+    else
+      respond_to do |format|
+        format.html do
+          flash[:alert] = 'You are the only member of this organization, so you must either delete the organization, or transfer the organization by adding another member before leaving.'
+          render action: "membership"
+        end
+        format.json { head :no_content }
+      end
     end
+
   end
 
   # POST /o/1/watch
