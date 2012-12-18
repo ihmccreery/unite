@@ -85,11 +85,21 @@ class OrganizationsController < ApplicationController
   # DELETE /o/1.json
   def destroy
     @organization = Organization.find(params[:id].downcase)
-    @organization.destroy
 
-    respond_to do |format|
-      format.html { redirect_to organizations_url }
-      format.json { head :no_content }
+    if params[:organization] && (params[:organization][:title] == @organization.title) &&  (params[:organization][:slug] == @organization.slug)
+      @organization.destroy
+      respond_to do |format|
+        format.html { redirect_to organizations_url, notice: 'Organization was successfully destroyed.' }
+        format.json { head :no_content }
+      end
+    else
+      respond_to do |format|
+        format.html do
+          flash[:alert] = 'Incorrect title or slug.'
+          render action: "delete"
+        end
+        format.json { head :no_content }
+      end
     end
   end
 

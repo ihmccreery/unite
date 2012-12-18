@@ -88,9 +88,17 @@ class OrganizationsControllerTest < ActionController::TestCase
         assert_response :success
       end
 
-      should "destroy organization" do
+      should "not destroy organization with the incorrect parameters" do
+        assert_no_difference('Organization.count') do
+          delete :destroy, id: @o, organization: { title: @o.title, slug: 'wrong_slug' }
+        end
+
+        assert_response :success
+      end
+
+      should "destroy organization with the correct parameters" do
         assert_difference('Organization.count', -1) do
-          delete :destroy, id: @o
+          delete :destroy, id: @o, organization: { title: @o.title, slug: @o.slug }
         end
 
         assert_redirected_to organizations_path
