@@ -3,6 +3,7 @@ Unite::Application.routes.draw do
   devise_for :users
 
   resources :organizations, path: 'o' do
+    get :delete, :on => :member
     get :membership, :on => :member
     post :add_member, :on => :member
     delete :leave, :on => :member

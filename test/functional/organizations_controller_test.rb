@@ -83,6 +83,11 @@ class OrganizationsControllerTest < ActionController::TestCase
         assert_redirected_to organization_path(assigns(:organization))
       end
 
+      should "get delete" do
+        get :delete, id: @o
+        assert_response :success
+      end
+
       should "destroy organization" do
         assert_difference('Organization.count', -1) do
           delete :destroy, id: @o

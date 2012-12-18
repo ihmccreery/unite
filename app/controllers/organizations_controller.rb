@@ -76,6 +76,11 @@ class OrganizationsController < ApplicationController
     end
   end
 
+  # GET /o/1/delete
+  def delete
+    @organization = Organization.find(params[:id].downcase)
+  end
+
   # DELETE /o/1
   # DELETE /o/1.json
   def destroy
