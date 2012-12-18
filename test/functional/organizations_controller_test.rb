@@ -52,18 +52,13 @@ class OrganizationsControllerTest < ActionController::TestCase
     #   assert_response :success
     # end
 
-    # should "update organization" do
-    #   put :update, id: @o, organization: @attributes
-    #   assert_redirected_to organization_path(assigns(:organization))
-    # end
+    should "not update organization" do
+      assert_raise(Grant::Error) { put :update, id: @o, organization: @attributes }
+    end
 
-    # should "destroy organization" do
-    #   assert_difference('Organization.count', -1) do
-    #     delete :destroy, id: @o
-    #   end
-
-    #   assert_redirected_to organizations_path
-    # end
+    should "not destroy organization" do
+      assert_raise(Grant::Error) { delete :destroy, id: @o }
+    end
 
     context "who is a member of the organization" do
 
