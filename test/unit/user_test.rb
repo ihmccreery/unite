@@ -2,7 +2,7 @@ require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
 
-  context "a factory user" do
+  context "a user" do
     should "be valid" do
       assert User.make!.valid?
     end

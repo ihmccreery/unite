@@ -2,7 +2,7 @@ require 'test_helper'
 
 class OrganizationsControllerTest < ActionController::TestCase
 
-  context "a signed-in factory user with a factory organization" do
+  context "a signed-in user with an organization" do
 
     setup do
       without_grant do
@@ -42,13 +42,8 @@ class OrganizationsControllerTest < ActionController::TestCase
       assert_response :success
     end
 
-    # should "get edit" do
+    # should "not get edit" do
     #   get :edit, id: @o
-    #   assert_response :success
-    # end
-
-    # should "get membership" do
-    #   get :membership, id: @o
     #   assert_response :success
     # end
 
@@ -56,8 +51,22 @@ class OrganizationsControllerTest < ActionController::TestCase
       assert_raise(Grant::Error) { put :update, id: @o, organization: @attributes }
     end
 
+    # should "not get membership" do
+    #   get :membership, id: @o
+    #   assert_response :success
+    # end
+
+    should "not add a member to that organization" do
+      assert_raise(Grant::Error) { post :add_member, id: @o, user: { username: @v.username } }
+    end
+
+    # should "not get delete" do
+    #   get :delete, id: @o
+    #   assert_response :success
+    # end
+
     should "not destroy organization" do
-      assert_raise(Grant::Error) { delete :destroy, id: @o }
+      assert_raise(Grant::Error) { delete :destroy, id: @o, organization: { title: @o.title, slug: @o.slug } }
     end
 
     context "who is a member of the organization" do
@@ -75,6 +84,27 @@ class OrganizationsControllerTest < ActionController::TestCase
 
       should "update organization" do
         put :update, id: @o, organization: @attributes
+        assert_redirected_to organization_path(assigns(:organization))
+      end
+
+      should "get membership" do
+        get :membership, id: @o
+        assert_response :success
+      end
+
+      should "add a member to that organization" do
+        assert_difference('Membership.count') do
+          post :add_member, id: @o, user: { username: @v.username }
+        end
+
+        assert_redirected_to membership_organization_path(assigns(:organization))
+      end
+
+      should "leave organization" do
+        assert_difference('Membership.count', -1) do
+          delete :leave, id: @o
+        end
+
         assert_redirected_to organization_path(assigns(:organization))
       end
 
@@ -97,27 +127,6 @@ class OrganizationsControllerTest < ActionController::TestCase
         end
 
         assert_redirected_to organizations_path
-      end
-
-      should "get membership" do
-        get :membership, id: @o
-        assert_response :success
-      end
-
-      should "add a member to that organization" do
-        assert_difference('Membership.count') do
-          post :add_member, id: @o, user: { username: @v.username }
-        end
-
-        assert_redirected_to membership_organization_path(assigns(:organization))
-      end
-
-      should "leave organization" do
-        assert_difference('Membership.count', -1) do
-          delete :leave, id: @o
-        end
-
-        assert_redirected_to organization_path(assigns(:organization))
       end
 
     end

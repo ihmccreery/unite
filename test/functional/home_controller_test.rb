@@ -2,7 +2,7 @@ require 'test_helper'
 
 class HomeControllerTest < ActionController::TestCase
 
-  context "a signed-in factory user" do
+  context "a signed-in user" do
 
     setup do
       without_grant do
