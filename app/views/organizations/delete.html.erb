@@ -6,30 +6,37 @@
   <li class="active"><%= link_to 'Delete', delete_organization_path(@organization) %></li>
 </ul>
 
+<div class="row">
 
-<%= form_for @organization, url: @organization, html: { method: :delete, class: "form-horizontal" } do |f| %>
-  <div class="control-group">
-    <div class="controls">
-      <span class="help-block">
-        Deleting an organization cannot be undone; please think very, very, very carefully before doing so.
-        If you're sure, type the title and slug of the organization below.</span>
+  <div class="span8">
+
+  <%= form_for @organization, url: @organization, html: { method: :delete, class: "form-horizontal" } do |f| %>
+    <div class="control-group">
+      <div class="controls">
+        <span class="help-block">
+          Deleting an organization cannot be undone; please think very, very, very carefully before doing so.
+          If you're sure, type the title and slug of the organization below.</span>
+      </div>
     </div>
-  </div>
-  <div class="control-group">
-    <%= f.label :title, class: "control-label" %>
-    <div class="controls">
-      <%= f.text_field :title, value: "" %>
+    <div class="control-group">
+      <%= f.label :title, class: "control-label" %>
+      <div class="controls">
+        <%= f.text_field :title, value: "" %>
+      </div>
     </div>
-  </div>
-  <div class="control-group">
-    <%= f.label :slug, class: "control-label" %>
-    <div class="controls">
-      <%= f.text_field :slug, value: "" %>
+    <div class="control-group">
+      <%= f.label :slug, class: "control-label" %>
+      <div class="controls">
+        <%= f.text_field :slug, value: "" %>
+      </div>
     </div>
-  </div>
-  <div class="control-group">
-    <div class="controls">
-      <%= f.submit "Delete organization", class: "btn btn-danger" %>
+    <div class="control-group">
+      <div class="controls">
+        <%= f.submit "Delete organization", class: "btn btn-danger" %>
+      </div>
     </div>
+  <% end %>
+
   </div>
-<% end %>
+
+</div>
