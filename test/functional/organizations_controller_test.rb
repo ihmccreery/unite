@@ -164,7 +164,9 @@ class OrganizationsControllerTest < ActionController::TestCase
     context "who is watching the organization" do
 
       setup do
-        @o.add_watcher(@u)
+        without_grant do
+          @o.add_watcher(@u)
+        end
       end
 
       should "unwatch organization" do
@@ -188,7 +190,9 @@ class OrganizationsControllerTest < ActionController::TestCase
     context "who has starred the organization" do
 
       setup do
-        @o.add_starrer(@u)
+        without_grant do
+          @o.add_starrer(@u)
+        end
       end
 
       should "unstar organization" do
