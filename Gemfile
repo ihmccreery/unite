@@ -22,6 +22,12 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
+# Gems used only for development and not required
+# in production environments by default.
+group :development do
+  gem 'mailcatcher'
+end
+
 # Gems used only for tests and not required
 # in production environments by default.
 group :test do
