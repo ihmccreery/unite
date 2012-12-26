@@ -2,7 +2,9 @@ class OrganizationsController < ApplicationController
 
   include Grant::Status
 
-  before_filter :authenticate_user!, :only => [:new, :watch, :star]
+  before_filter :authenticate_user!, only: [:new, :watch, :star]
+
+  layout 'organization', except: [:index, :new]
 
   # GET /o
   # GET /o.json

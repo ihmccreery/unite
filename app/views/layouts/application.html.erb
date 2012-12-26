@@ -5,7 +5,7 @@
 
     <meta charset="utf-8">
 
-    <title><%= content_for?(:title) ? yield(:title) : "Unite" %></title>
+    <title><%= content_for?(:title) ? "#{yield(:title)} | Unite" : "Unite" %></title>
     <%= stylesheet_link_tag "application", :media => "all" %>
     <%= favicon_link_tag %>
 
@@ -37,7 +37,7 @@
 
     <%= bootstrap_flash %>
 
-    <%= yield %>
+    <div id="content"><%= content_for?(:content) ? yield(:content) : yield %></div>
 
     <!-- Javascripts
     ================================================== -->
