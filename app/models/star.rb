@@ -1,7 +1,8 @@
 class Star < ActiveRecord::Base
 
   grant(:find) { true }
-  grant(:create, :destroy) { |user, star| user && (star.user == user) }
+  grant(:create) { |user, star| user && (star.user == user) }
+  grant(:destroy) { |user, star| user && ((star.user == user) || (star.organization.has_member?(user))) }
 
   belongs_to :user
   belongs_to :organization

@@ -2,14 +2,19 @@ Unite::Application.routes.draw do
 
   devise_for :users
 
-  resources :organizations, path: 'o' do
+  resources :organizations, path: '', except: :index do
+
+    get :delete, :on => :member
     get :membership, :on => :member
     post :add_member, :on => :member
     delete :leave, :on => :member
+
     post :watch, :on => :member
     delete :unwatch, :on => :member
+
     post :star, :on => :member
     delete :unstar, :on => :member
+
   end
 
   # resources :memberships, only: [:create, :destroy]
@@ -63,7 +68,9 @@ Unite::Application.routes.draw do
 
   # You can have the root of your site routed with "root"
   # just remember to delete public/index.html.
-  root :to => 'home#index'
+  #
+  # we're now routing root to organizations#index
+  root :to => 'organizations#index'
 
   # See how all your routes lay out with "rake routes"
 

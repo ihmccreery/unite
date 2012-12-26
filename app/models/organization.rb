@@ -8,11 +8,11 @@ class Organization < ActiveRecord::Base
   include FriendlyId
   friendly_id :slug
 
-  has_many :memberships, dependent: :destroy
+  has_many :memberships
   has_many :members, through: :memberships, source: :user
-  has_many :watches, dependent: :destroy
+  has_many :watches
   has_many :watchers, through: :watches, source: :user
-  has_many :stars, dependent: :destroy
+  has_many :stars
   has_many :starrers, through: :stars, source: :user
   attr_accessible :title, :subtitle, :description, :slug
 
@@ -22,9 +22,18 @@ class Organization < ActiveRecord::Base
   # move friendly_id errors to slug
   after_validation :move_friendly_id_error_to_slug
 
+  before_destroy :destroy_user_relations
+
   # move friendly_id error to slug
   def move_friendly_id_error_to_slug
     errors.add :slug, *errors.delete(:friendly_id) if errors[:friendly_id].present?
+  end
+
+  # destroy user relations manually to prevent callbacks running out of order
+  def destroy_user_relations
+    self.stars.destroy
+    self.watches.destroy
+    self.memberships.destroy
   end
 
   # memberships

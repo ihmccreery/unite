@@ -2,7 +2,7 @@ require 'test_helper'
 
 class OrganizationsControllerTest < ActionController::TestCase
 
-  context "a signed-in factory user with a factory organization" do
+  context "a signed-in user with an organization" do
 
     setup do
       without_grant do
@@ -42,28 +42,32 @@ class OrganizationsControllerTest < ActionController::TestCase
       assert_response :success
     end
 
-    # should "get edit" do
+    # should "not get edit" do
     #   get :edit, id: @o
     #   assert_response :success
     # end
 
-    # should "get membership" do
+    should "not update organization" do
+      assert_raise(Grant::Error) { put :update, id: @o, organization: @attributes }
+    end
+
+    # should "not get membership" do
     #   get :membership, id: @o
     #   assert_response :success
     # end
 
-    # should "update organization" do
-    #   put :update, id: @o, organization: @attributes
-    #   assert_redirected_to organization_path(assigns(:organization))
+    should "not add a member to that organization" do
+      assert_raise(Grant::Error) { post :add_member, id: @o, user: { username: @v.username } }
+    end
+
+    # should "not get delete" do
+    #   get :delete, id: @o
+    #   assert_response :success
     # end
 
-    # should "destroy organization" do
-    #   assert_difference('Organization.count', -1) do
-    #     delete :destroy, id: @o
-    #   end
-
-    #   assert_redirected_to organizations_path
-    # end
+    should "not destroy organization" do
+      assert_raise(Grant::Error) { delete :destroy, id: @o, organization: { title: @o.title, slug: @o.slug } }
+    end
 
     context "who is a member of the organization" do
 
@@ -83,14 +87,6 @@ class OrganizationsControllerTest < ActionController::TestCase
         assert_redirected_to organization_path(assigns(:organization))
       end
 
-      should "destroy organization" do
-        assert_difference('Organization.count', -1) do
-          delete :destroy, id: @o
-        end
-
-        assert_redirected_to organizations_path
-      end
-
       should "get membership" do
         get :membership, id: @o
         assert_response :success
@@ -104,12 +100,55 @@ class OrganizationsControllerTest < ActionController::TestCase
         assert_redirected_to membership_organization_path(assigns(:organization))
       end
 
-      should "leave organization" do
-        assert_difference('Membership.count', -1) do
-          delete :leave, id: @o
+      context "as the only member" do
+
+        should "not leave organization" do
+          assert_no_difference('Membership.count', -1) do
+            delete :leave, id: @o
+          end
+
+          assert_response :success
         end
 
-        assert_redirected_to organization_path(assigns(:organization))
+      end
+
+      context "as not the only member" do
+
+        setup do
+          without_grant do
+            @o.add_member(@v)
+          end
+        end
+
+        should "leave organization" do
+          assert_difference('Membership.count', -1) do
+            delete :leave, id: @o
+          end
+
+          assert_redirected_to organization_path(assigns(:organization))
+        end
+
+      end
+
+      should "get delete" do
+        get :delete, id: @o
+        assert_response :success
+      end
+
+      should "not destroy organization with the incorrect parameters" do
+        assert_no_difference('Organization.count') do
+          delete :destroy, id: @o, organization: { title: @o.title, slug: 'wrong_slug' }
+        end
+
+        assert_response :success
+      end
+
+      should "destroy organization with the correct parameters" do
+        assert_difference('Organization.count', -1) do
+          delete :destroy, id: @o, organization: { title: @o.title, slug: @o.slug }
+        end
+
+        assert_redirected_to root_path
       end
 
     end
@@ -125,7 +164,9 @@ class OrganizationsControllerTest < ActionController::TestCase
     context "who is watching the organization" do
 
       setup do
-        @o.add_watcher(@u)
+        without_grant do
+          @o.add_watcher(@u)
+        end
       end
 
       should "unwatch organization" do
@@ -149,7 +190,9 @@ class OrganizationsControllerTest < ActionController::TestCase
     context "who has starred the organization" do
 
       setup do
-        @o.add_starrer(@u)
+        without_grant do
+          @o.add_starrer(@u)
+        end
       end
 
       should "unstar organization" do

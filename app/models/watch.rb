@@ -1,7 +1,8 @@
 class Watch < ActiveRecord::Base
 
   grant(:find) { true }
-  grant(:create, :destroy) { |user, watch| user && (watch.user == user) }
+  grant(:create) { |user, watch| user && (watch.user == user) }
+  grant(:destroy) { |user, watch| user && ((watch.user == user) || (watch.organization.has_member?(user))) }
 
   belongs_to :user
   belongs_to :organization
