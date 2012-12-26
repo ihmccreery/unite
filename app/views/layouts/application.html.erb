@@ -2,11 +2,22 @@
 <html lang="en">
 
   <head>
+
     <meta charset="utf-8">
+
     <title><%= content_for?(:title) ? yield(:title) : "Unite" %></title>
-    <%= csrf_meta_tags %>
     <%= stylesheet_link_tag "application", :media => "all" %>
     <%= favicon_link_tag %>
+
+    <%= csrf_meta_tags %>
+
+    <%# IE stuff %>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+    <!-- Le HTML5 shim, for IE6-8 support of HTML elements -->
+    <!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js" type="text/javascript"></script>
+    <![endif]-->
+
   </head>
 
   <body>
@@ -23,17 +34,6 @@
         <% end %>
       </ul>
     </nav>
-
-    <!--[if IE]>
-      <div class="alert alert-error fade in">
-        You are using Internet Explorer.  We recommend using a different browser:
-        <%= link_to "Chrome", "http://www.google.com/chrome", target: "_blank" %>,
-        <%= link_to "Firefox", "http://www.getfirefox.com", target: "_blank" %>,
-        <%= link_to "Opera", "www.opera.com", target: "_blank" %>,
-        or
-        <%= link_to "Safari", "http://www.apple.com/safari", target: "_blank" %>.
-      </div>
-    <![endif]-->
 
     <%= render 'layouts/flash_messages' %>
 
