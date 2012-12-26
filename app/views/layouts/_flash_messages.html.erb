@@ -1,9 +1,7 @@
-<% flash.each do |key, value| %>
-  <%# we must ignore the :timedout key set by Devise %>
-  <% unless key == :timedout %>
-    <div class="<%= flash_class(key) %> fade in">
-      <a href="#" data-dismiss="alert" class="close">×</a>
-      <%= value %>
-    </div>
-  <% end %>
+<%# we must ignore the :timedout key set by Devise %>
+<% flash.reject{|key, value| key == :timedout }.each do |key, value| %>
+  <div class="<%= flash_class(key) %> fade in">
+    <a href="#" data-dismiss="alert" class="close">×</a>
+    <%= value %>
+  </div>
 <% end %>
