@@ -1,4 +1,4 @@
-<div class="page-header">
+<div id="header" class="page-header">
   <div id="organization-actions" class="btn-toolbar">
     <% if Organization.new.granted?(:create) %>
       <%= link_to '<i class="icon-plus"></i> New organization'.html_safe, new_organization_path, class: "btn" %>

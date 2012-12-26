@@ -22,22 +22,33 @@
 
   <body>
 
-    <nav>
-      <%= link_to "Unite", root_path %>
-      <ul>
-        <% if user_signed_in? %>
-          <li><%= link_to "Account settings", edit_user_registration_path %></li>
-          <li><%= link_to "Sign out", destroy_user_session_path, :method => :delete %></li>
-        <% else %>
-          <li><%= link_to "Sign in", new_user_session_path %></li>
-          <li><%= link_to "Sign up", new_user_registration_path %></li>
-        <% end %>
-      </ul>
-    </nav>
+    <div id="content">
 
-    <%= bootstrap_flash %>
+      <nav>
+        <ul id="users" class="nav nav-pills">
+          <li class="dropdown">
+            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+              <i class="icon-user"></i><b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+              <% if user_signed_in? %>
+                <li><%= link_to "Account settings", edit_user_registration_path %></li>
+                <li><%= link_to "Sign out", destroy_user_session_path, :method => :delete %></li>
+              <% else %>
+                <li><%= link_to "Sign in", new_user_session_path %></li>
+                <li><%= link_to "Sign up", new_user_registration_path %></li>
+              <% end %>
+            </ul>
+          </li>
+        </ul>
+        <ul id="brand" class="nav nav-pills">
+          <li><%= link_to "<b>U</b>".html_safe, root_path %></li>
+        </ul>
+      </nav>
 
-    <div id="content"><%= content_for?(:content) ? yield(:content) : yield %></div>
+      <%= bootstrap_flash %>
+      <%= content_for?(:content) ? yield(:content) : yield %>
+    </div>
 
     <!-- Javascripts
     ================================================== -->

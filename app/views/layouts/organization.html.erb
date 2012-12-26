@@ -4,7 +4,6 @@
 
   <div id="header" class="page-header">
     <div id="organization-actions" class="btn-toolbar">
-      <%# TODO make tip that a user must be signed in %>
       <% if current_user && @organization.has_member?(current_user) %>
         <%= link_to '<i class="icon-cog"></i> Admin'.html_safe, edit_organization_path(@organization), class: "btn" %>
       <% end %>
@@ -22,8 +21,9 @@
       <% end %>
     </div>
 
-    <h3><%= link_to @organization.title, @organization %></h3>
-    <h4><%= @organization.subtitle %></h4>
+    <h3>/<%= link_to @organization.slug, @organization %></h3>
+    <h1><%= @organization.title %></h1>
+    <h2><%= @organization.subtitle %></h2>
   </div>
 
   <%= yield %>
