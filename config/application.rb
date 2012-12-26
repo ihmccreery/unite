@@ -63,5 +63,15 @@ module Unite
     config.generators do |g|
       g.fixture_replacement :machinist
     end
+
+    # For FriendlyId
+    #
+    # we must reserve any words that we use as root resources (e.g. /users)
+    FriendlyId.defaults do |config|
+      config.use :reserved
+      # Reserve words for English
+      config.reserved_words = %w(new users)
+    end
+
   end
 end
