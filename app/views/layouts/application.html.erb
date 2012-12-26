@@ -1,64 +1,43 @@
 <!DOCTYPE html>
 <html lang="en">
+
   <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><%= content_for?(:title) ? yield(:title) : "Unite" %></title>
     <%= csrf_meta_tags %>
-
     <%= stylesheet_link_tag "application", :media => "all" %>
-
     <%= favicon_link_tag %>
   </head>
+
   <body>
 
-    <div class="navbar navbar-static-top">
-      <div class="navbar-inner">
-        <div class="container">
-          <a class="btn btn-navbar" data-target=".nav-collapse" data-toggle="collapse">
-            <span class="icon-bar"></span>
-            <% if user_signed_in? %>
-              <span class="icon-bar"></span>
-              <span class="icon-bar"></span>
-            <% else %>
-              <span class="icon-bar"></span>
-            <% end %>
-          </a>
-          <a class="brand" href="/">Unite</a>
-          <div class="container nav-collapse">
-            <ul id="user-nav" class="nav">
-              <% if user_signed_in? %>
-                <li><%= link_to "Account settings", edit_user_registration_path %></li>
-                <li><%= link_to "Sign out", destroy_user_session_path, :method => :delete %></li>
-              <% else %>
-                <li><%= link_to "Sign in", new_user_session_path %></li>
-                <li><%= link_to "Sign up", new_user_registration_path %></li>
-              <% end %>
-            </ul>
-          </div><!--/.nav-collapse -->
-        </div>
+    <nav>
+      <%= link_to "Unite", root_path %>
+      <ul>
+        <% if user_signed_in? %>
+          <li><%= link_to "Account settings", edit_user_registration_path %></li>
+          <li><%= link_to "Sign out", destroy_user_session_path, :method => :delete %></li>
+        <% else %>
+          <li><%= link_to "Sign in", new_user_session_path %></li>
+          <li><%= link_to "Sign up", new_user_registration_path %></li>
+        <% end %>
+      </ul>
+    </nav>
+
+    <!--[if IE]>
+      <div class="alert alert-error fade in">
+        You are using Internet Explorer.  We recommend using a different browser:
+        <%= link_to "Safari", "http://www.apple.com/safari", target: "_blank" %>,
+        <%= link_to "Chrome", "http://www.google.com/chrome", target: "_blank" %>,
+        <%= link_to "Firefox", "http://www.getfirefox.com/", target: "_blank" %>,
+        or
+        <%= link_to "Opera", "www.opera.com/", target: "_blank" %>
       </div>
-    </div>
+    <![endif]-->
 
-    <div class="container" id="content-container">
-      <div class="row">
-        <div class="span12">
-          <!--[if IE]>
-            <div class="alert alert-error fade in">
-              You are using Internet Explorer.  We recommend using a different browser:
-              <%= link_to "Safari", "http://www.apple.com/safari", target: "_blank" %>,
-              <%= link_to "Chrome", "http://www.google.com/chrome", target: "_blank" %>,
-              <%= link_to "Firefox", "http://www.getfirefox.com/", target: "_blank" %>,
-              or
-              <%= link_to "Opera", "www.opera.com/", target: "_blank" %>
-            </div>
-          <![endif]-->
-          <%= render 'layouts/flash_messages' %>
-          <%= yield %>
-        </div><!--/span-->
-      </div><!--/row-->
+    <%= render 'layouts/flash_messages' %>
 
-    </div> <!-- /container -->
+    <%= yield %>
 
     <!-- Javascripts
     ================================================== -->
@@ -66,4 +45,5 @@
     <%= javascript_include_tag "application" %>
 
   </body>
+
 </html>
