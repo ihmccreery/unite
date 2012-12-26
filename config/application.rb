@@ -70,7 +70,7 @@ module Unite
     FriendlyId.defaults do |config|
       config.use :reserved
       # Reserve words for English
-      config.reserved_words = %w(new users)
+      config.reserved_words = %w(new edit users)
     end
 
   end
