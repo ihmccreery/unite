@@ -1,8 +1,13 @@
 Unite::Application.routes.draw do
 
+  # XXX: whenever adding a root-level namespace, make sure that the keyword is
+  # properly reserved (see below)
+
+  root :to => 'home#index'
+
   devise_for :users
 
-  resources :organizations, path: '' do
+  resources :organizations do
 
     get :delete, :on => :member
     get :membership, :on => :member
@@ -16,6 +21,11 @@ Unite::Application.routes.draw do
     delete :unstar, :on => :member
 
   end
+
+  # XXX: whenever adding a root-level namespace, make sure that the keyword is
+  # properly reserved for friendly_id in:
+  #   config/application.rb
+  match '/:id' => 'organizations#show', :as => :organization
 
   # resources :memberships, only: [:create, :destroy]
 
@@ -70,7 +80,7 @@ Unite::Application.routes.draw do
   # just remember to delete public/index.html.
   #
   # we're now routing root to organizations#index
-  root :to => 'organizations#index'
+  # root :to => 'home#index'
 
   # See how all your routes lay out with "rake routes"
 
