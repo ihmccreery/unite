@@ -148,7 +148,7 @@ class OrganizationsControllerTest < ActionController::TestCase
           delete :destroy, id: @o, organization: { title: @o.title, slug: @o.slug }
         end
 
-        assert_redirected_to root_path
+        assert_redirected_to organizations_path
       end
 
     end

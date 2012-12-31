@@ -2,7 +2,7 @@ Unite::Application.routes.draw do
 
   devise_for :users
 
-  resources :organizations, path: '', except: :index do
+  resources :organizations, path: '' do
 
     get :delete, :on => :member
     get :membership, :on => :member

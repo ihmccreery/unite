@@ -92,7 +92,7 @@ class OrganizationsController < ApplicationController
       @organization.destroy
       # TODO make this more sensible, maybe based on success/failure
       respond_to do |format|
-        format.html { redirect_to root_url, notice: 'Organization was successfully destroyed.' }
+        format.html { redirect_to organizations_path, notice: 'Organization was successfully destroyed.' }
         format.json { head :no_content }
       end
     else
