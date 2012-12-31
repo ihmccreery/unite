@@ -7,7 +7,7 @@ Unite::Application.routes.draw do
 
   devise_for :users
 
-  resources :organizations do
+  resources :organizations, except: [:show, :update, :destroy] do
 
     get :delete, :on => :member
     get :membership, :on => :member
@@ -25,7 +25,9 @@ Unite::Application.routes.draw do
   # XXX: whenever adding a root-level namespace, make sure that the keyword is
   # properly reserved for friendly_id in:
   #   config/application.rb
-  match '/:id' => 'organizations#show', :as => :organization
+  match '/:id' => 'organizations#show', as: :organization, via: :get
+  match '/:id' => 'organizations#update', as: :organization, via: :put
+  match '/:id' => 'organizations#destroy', as: :organization, via: :delete
 
   # resources :memberships, only: [:create, :destroy]
 
