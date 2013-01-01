@@ -10,7 +10,7 @@ class OrganizationsController < ApplicationController
 
   # GET /
   def index
-    @organizations = Organization.all
+    @organizations = Organization.all.shuffle
   end
 
   # GET /my_organization

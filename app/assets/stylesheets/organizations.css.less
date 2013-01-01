@@ -1,3 +1,36 @@
-#header #organization-actions {
+// Core variables and mixins
+@import "twitter/bootstrap/variables.less"; // Modify this for custom colors, font-sizes, etc
+@import "twitter/bootstrap/mixins.less";
+
+#organization-actions {
 	float: right;
+	margin: 0 15px;
 }
+
+#organizations {
+	margin: 0;
+	li {
+		display: block;
+		float: left;
+		margin: 15px;
+		a {
+			display: block;
+			float: left;
+			height: 300px;
+			width: 206px;
+			padding: 0 15px;
+			background-color: @navbarBackground;
+			color: @textColor;
+			.slug {
+				color: @linkColor;
+			}
+			h4 {
+				color: @navbarText;
+			}
+		}
+		a:hover {
+			background-color: lighten(@navbarBackground, 2%);
+		}
+	}
+}
+
