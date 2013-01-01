@@ -107,7 +107,7 @@ class OrganizationsControllerTest < ActionController::TestCase
             delete :leave, id: @o
           end
 
-          assert_response :success
+          assert_redirected_to membership_organization_path(assigns(:organization))
         end
 
       end
@@ -140,7 +140,7 @@ class OrganizationsControllerTest < ActionController::TestCase
           delete :destroy, id: @o, organization: { title: @o.title, slug: 'wrong_slug' }
         end
 
-        assert_response :success
+        assert_redirected_to delete_organization_path(assigns(:organization))
       end
 
       should "destroy organization with the correct parameters" do

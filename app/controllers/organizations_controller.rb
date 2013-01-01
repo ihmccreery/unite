@@ -4,33 +4,33 @@ class OrganizationsController < ApplicationController
 
   before_filter :authenticate_user!, only: [:new, :watch, :star]
 
-  layout 'organization', except: [:index, :new]
+  layout 'organization', except: [:index, :new, :create]
+
+  respond_to :html
 
   # GET /
   def index
     @organizations = Organization.all
-
-    respond_to do |format|
-      format.html # index.html.erb
-    end
   end
 
   # GET /my_organization
   def show
     @organization = Organization.find(params[:id].downcase)
-
-    respond_to do |format|
-      format.html # show.html.erb
-    end
   end
 
   # GET /new
   def new
     @organization = Organization.new
+  end
 
-    respond_to do |format|
-      format.html # new.html.erb
+  # POST /
+  def create
+    @organization = Organization.new(params[:organization])
+    if @organization.save
+      flash[:notice] = "#{@organization.title} was successfully created."
+      without_grant { @organization.add_member(current_user) }
     end
+    respond_with @organization
   end
 
   # GET /my_organization/edit
@@ -38,32 +38,13 @@ class OrganizationsController < ApplicationController
     @organization = Organization.find(params[:id].downcase)
   end
 
-  # POST /
-  def create
-    @organization = Organization.new(params[:organization])
-    success = @organization.save
-    without_grant { @organization.add_member(current_user) }
-
-    respond_to do |format|
-      if success
-        format.html { redirect_to @organization, notice: 'Organization was successfully created.' }
-      else
-        format.html { render action: "new" }
-      end
-    end
-  end
-
   # PUT /my_organization
   def update
     @organization = Organization.find(params[:id].downcase)
-
-    respond_to do |format|
-      if @organization.update_attributes(params[:organization])
-        format.html { redirect_to @organization, notice: 'Organization was successfully updated.' }
-      else
-        format.html { render action: "edit" }
-      end
+    if @organization.update_attributes(params[:organization])
+      flash[:notice] = "#{@organization.title} was successfully updated."
     end
+    respond_with @organization
   end
 
   # GET /my_organization/delete
@@ -74,20 +55,14 @@ class OrganizationsController < ApplicationController
   # DELETE /my_organization
   def destroy
     @organization = Organization.find(params[:id].downcase)
-
     if params[:organization] && (params[:organization][:title] == @organization.title) &&  (params[:organization][:slug] == @organization.slug)
-      @organization.destroy
-      # TODO make this more sensible, maybe based on success/failure
-      respond_to do |format|
-        format.html { redirect_to organizations_path, notice: 'Organization was successfully destroyed.' }
+      if @organization.destroy
+        flash[:notice] = "#{@organization.title} was successfully destroyed."
       end
+      respond_with @organization
     else
-      respond_to do |format|
-        format.html do
-          flash[:alert] = 'Incorrect title or slug.'
-          render action: "delete"
-        end
-      end
+      flash[:alert] = 'Incorrect title or slug.'
+      respond_with @organization, location: delete_organization_path(@organization)
     end
   end
 
@@ -101,76 +76,53 @@ class OrganizationsController < ApplicationController
     @organization = Organization.find(params[:id].downcase)
     @user = User.find_by_username(params[:user][:username].downcase)
     @organization.add_member(@user)
-
-    # TODO make this more sensible, maybe based on success/failure
-    respond_to do |format|
-      format.html { redirect_to membership_organization_path(@organization), notice: "User #{params[:user][:username]} added." }
-    end
+    # TODO add flash message?
+    respond_with @organization, location: membership_organization_path(@organization)
   end
 
   # POST /my_organization/leave
   def leave
     @organization = Organization.find(params[:id].downcase)
-
     unless @organization.members.reject{ |member| member == current_user }.empty?
       @organization.remove_member(current_user)
-      # TODO make this more sensible, maybe based on success/failure
-      respond_to do |format|
-        format.html { redirect_to @organization }
-      end
+      # TODO make based on success/failure
+      respond_with @organization
     else
-      respond_to do |format|
-        format.html do
-          flash[:alert] = 'You are the only member of this organization, so you must either delete the organization, or transfer the organization by adding another member before leaving.'
-          render action: "membership"
-        end
-      end
+      flash[:alert] = 'You are the only member of this organization, so you must either delete the organization, or transfer the organization by adding another member before leaving.'
+      respond_with @organization, location: membership_organization_path(@organization)
     end
-
   end
 
   # POST /my_organization/watch
   def watch
     @organization = Organization.find(params[:id].downcase)
     @organization.add_watcher(current_user)
-
-    # TODO make this more sensible, maybe based on success/failure
-    respond_to do |format|
-      format.html { redirect_to @organization }
-    end
+    # TODO make based on success/failure
+    respond_with @organization
   end
 
   # POST /my_organization/unwatch
   def unwatch
     @organization = Organization.find(params[:id].downcase)
     @organization.remove_watcher(current_user)
-
-    # TODO make this more sensible, maybe based on success/failure
-    respond_to do |format|
-      format.html { redirect_to @organization }
-    end
+    # TODO make based on success/failure
+    respond_with @organization
   end
 
   # POST /my_organization/star
   def star
     @organization = Organization.find(params[:id].downcase)
     @organization.add_starrer(current_user)
-
-    # TODO make this more sensible, maybe based on success/failure
-    respond_to do |format|
-      format.html { redirect_to @organization }
-    end
+    # TODO make based on success/failure
+    respond_with @organization
   end
 
   # POST /my_organization/unstar
   def unstar
     @organization = Organization.find(params[:id].downcase)
     @organization.remove_starrer(current_user)
-
-    # TODO make this more sensible, maybe based on success/failure
-    respond_to do |format|
-      format.html { redirect_to @organization }
-    end
+    # TODO make based on success/failure
+    respond_with @organization
   end
 
 end
