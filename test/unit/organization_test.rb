@@ -86,7 +86,7 @@ class OrganizationTest < ActiveSupport::TestCase
 
     context "with an invalid slug" do
       should "be invalid" do
-        ['o o', '\o', 'o@', ' ', 'O-O', 'new', 'edit', 'users', 'organizations'].each do |slug|
+        ['o o', '\o', 'o@', ' ', 'O-O', 'new', 'edit', 'users'].each do |slug|
           @o.slug = slug
           assert @o.invalid?
           assert @o.errors[:slug].any?, "#{slug} should be an invalid slug"

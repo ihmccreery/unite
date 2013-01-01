@@ -6,7 +6,7 @@ class OrganizationsController < ApplicationController
 
   layout 'organization', except: [:index, :new]
 
-  # GET /organizations
+  # GET /
   def index
     @organizations = Organization.all
 
@@ -24,7 +24,7 @@ class OrganizationsController < ApplicationController
     end
   end
 
-  # GET /organizations/new
+  # GET /new
   def new
     @organization = Organization.new
 
@@ -33,12 +33,12 @@ class OrganizationsController < ApplicationController
     end
   end
 
-  # GET /organizations/my_organization/edit
+  # GET /my_organization/edit
   def edit
     @organization = Organization.find(params[:id].downcase)
   end
 
-  # POST /organizations
+  # POST /
   def create
     @organization = Organization.new(params[:organization])
     success = @organization.save
@@ -66,7 +66,7 @@ class OrganizationsController < ApplicationController
     end
   end
 
-  # GET /organizations/my_organization/delete
+  # GET /my_organization/delete
   def delete
     @organization = Organization.find(params[:id].downcase)
   end
@@ -91,12 +91,12 @@ class OrganizationsController < ApplicationController
     end
   end
 
-  # GET /organizations/my_organization/edit
+  # GET /my_organization/edit
   def membership
     @organization = Organization.find(params[:id].downcase)
   end
 
-  # POST /organizations/my_organization/add_member
+  # POST /my_organization/add_member
   def add_member
     @organization = Organization.find(params[:id].downcase)
     @user = User.find_by_username(params[:user][:username].downcase)
@@ -108,7 +108,7 @@ class OrganizationsController < ApplicationController
     end
   end
 
-  # POST /organizations/my_organization/leave
+  # POST /my_organization/leave
   def leave
     @organization = Organization.find(params[:id].downcase)
 
@@ -129,7 +129,7 @@ class OrganizationsController < ApplicationController
 
   end
 
-  # POST /organizations/my_organization/watch
+  # POST /my_organization/watch
   def watch
     @organization = Organization.find(params[:id].downcase)
     @organization.add_watcher(current_user)
@@ -140,7 +140,7 @@ class OrganizationsController < ApplicationController
     end
   end
 
-  # POST /organizations/my_organization/unwatch
+  # POST /my_organization/unwatch
   def unwatch
     @organization = Organization.find(params[:id].downcase)
     @organization.remove_watcher(current_user)
@@ -151,7 +151,7 @@ class OrganizationsController < ApplicationController
     end
   end
 
-  # POST /organizations/my_organization/star
+  # POST /my_organization/star
   def star
     @organization = Organization.find(params[:id].downcase)
     @organization.add_starrer(current_user)
@@ -162,7 +162,7 @@ class OrganizationsController < ApplicationController
     end
   end
 
-  # POST /organizations/my_organization/unstar
+  # POST /my_organization/unstar
   def unstar
     @organization = Organization.find(params[:id].downcase)
     @organization.remove_starrer(current_user)

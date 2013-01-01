@@ -1,13 +1,11 @@
 Unite::Application.routes.draw do
 
   # XXX: whenever adding a root-level namespace, make sure that the keyword is
-  # properly reserved (see below)
-
-  root :to => 'home#index'
+  # properly reserved for friendly_id in config/application.rb
 
   devise_for :users
 
-  resources :organizations, except: [:show, :update, :destroy] do
+  resources :organizations, path: '' do
 
     get :delete, :on => :member
     get :membership, :on => :member
@@ -22,12 +20,8 @@ Unite::Application.routes.draw do
 
   end
 
-  # XXX: whenever adding a root-level namespace, make sure that the keyword is
-  # properly reserved for friendly_id in:
-  #   config/application.rb
-  match '/:id' => 'organizations#show', as: :organization, via: :get
-  match '/:id' => 'organizations#update', as: :organization, via: :put
-  match '/:id' => 'organizations#destroy', as: :organization, via: :delete
+  # we must define a root route to provide a route for root_path and root_url
+  root :to => 'organizations#index'
 
   # resources :memberships, only: [:create, :destroy]
 
