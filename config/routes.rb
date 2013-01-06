@@ -3,7 +3,9 @@ Unite::Application.routes.draw do
   # XXX: whenever adding a root-level namespace, make sure that the keyword is
   # properly reserved for friendly_id in config/application.rb
 
-  devise_for :users
+  devise_for :users, path: 'sessions'
+
+  resources :users, only: [:index, :show]
 
   resources :organizations, path: '' do
 

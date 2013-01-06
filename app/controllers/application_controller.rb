@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
   # for Devise redirect back to page
   def store_location
     # store last url as long as it isn't a /users path
-    session[:previous_path] = request.fullpath unless request.fullpath =~ /\/users/
+    session[:previous_path] = request.fullpath unless request.fullpath =~ /\/sessions/
   end
 
   def after_sign_in_path_for(resource)

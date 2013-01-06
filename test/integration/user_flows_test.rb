@@ -10,7 +10,7 @@ class UserFlowsTest < ActionDispatch::IntegrationTest
     end
 
     should "get the sign in page" do
-      get "/users/sign_in"
+      get "/sessions/sign_in"
       assert_response :success
     end
 
@@ -25,21 +25,21 @@ class UserFlowsTest < ActionDispatch::IntegrationTest
     end
 
     should "not sign in with the incorrect password" do
-      post_via_redirect "/users/sign_in", user: { username: @u.username, password: 'bad password' }
+      post_via_redirect "/sessions/sign_in", user: { username: @u.username, password: 'bad password' }
       assert_response :success
       assert_equal I18n.t(:invalid, scope: [:devise, :failure]), flash[:alert]
     end
 
     should "sign in with the correct password" do
-      post_via_redirect "/users/sign_in", user: { username: @u.username, password: @u.password }
+      post_via_redirect "/sessions/sign_in", user: { username: @u.username, password: @u.password }
       assert_response :success
       assert_equal I18n.t(:signed_in, scope: [:devise, :sessions]), flash[:notice]
       assert_equal @u, Grant::User.current_user
     end
 
     should "sign in and then sign out" do
-      post_via_redirect "/users/sign_in", user: { username: @u.username, password: @u.password }
-      delete_via_redirect "/users/sign_out"
+      post_via_redirect "/sessions/sign_in", user: { username: @u.username, password: @u.password }
+      delete_via_redirect "/sessions/sign_out"
       assert_response :success
       assert_equal I18n.t(:signed_out, scope: [:devise, :sessions]), flash[:notice]
       assert_equal nil, Grant::User.current_user
