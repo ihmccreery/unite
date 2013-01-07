@@ -92,6 +92,14 @@ class OrganizationsControllerTest < ActionController::TestCase
         assert_response :success
       end
 
+      should "not add a member that doesn't exist to that organization" do
+        assert_no_difference('Membership.count') do
+          post :add_member, id: @o, user: { username: 'bad_username' }
+        end
+
+        assert_redirected_to membership_organization_path(assigns(:organization))
+      end
+
       should "add a member to that organization" do
         assert_difference('Membership.count') do
           post :add_member, id: @o, user: { username: @v.username }

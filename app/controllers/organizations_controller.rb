@@ -75,9 +75,14 @@ class OrganizationsController < ApplicationController
   def add_member
     @organization = Organization.find(params[:id].downcase)
     @user = User.find_by_username(params[:user][:username].downcase)
-    @organization.add_member(@user)
-    # TODO add flash message?
-    respond_with @organization, location: membership_organization_path(@organization)
+    if @user
+      @organization.add_member(@user)
+      flash[:notice] = "User #{params[:user][:username]} successfully added."
+      respond_with @organization, location: membership_organization_path(@organization)
+    else
+      flash[:alert] = "There is no user with username #{params[:user][:username]}."
+      respond_with @organization, location: membership_organization_path(@organization)
+    end
   end
 
   # POST /my_organization/leave
