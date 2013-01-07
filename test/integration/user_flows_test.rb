@@ -47,4 +47,23 @@ class UserFlowsTest < ActionDispatch::IntegrationTest
 
   end
 
+  context "a user and an organization" do
+
+    setup do
+      without_grant do
+        @slug = "slug"
+        @o = Organization.make!(:slug => @slug)
+        @u = User.make!
+      end
+    end
+
+    should "get an organization's page, sign in, and then get redirected to that organization's page" do
+      get "/slug"
+      post_via_redirect "/users/sign_in", user: { username: @u.username, password: @u.password }
+      assert_response :success
+      assert_not_nil assigns(:organization)
+    end
+
+  end
+
 end
