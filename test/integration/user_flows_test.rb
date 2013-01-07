@@ -59,7 +59,7 @@ class UserFlowsTest < ActionDispatch::IntegrationTest
 
     should "get an organization's page, sign in, and then get redirected to that organization's page" do
       get "/slug"
-      post_via_redirect "/users/sign_in", user: { username: @u.username, password: @u.password }
+      post_via_redirect "/sessions/sign_in", user: { username: @u.username, password: @u.password }
       assert_response :success
       assert_not_nil assigns(:organization)
     end
